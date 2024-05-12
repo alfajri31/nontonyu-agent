@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npx ts-node myanimelist/connection.ts",
-    "test": "jest myanimelist"
+    "test": "jest myanimelist/test"
   },
   "type": "commonjs",
   "author": "",
