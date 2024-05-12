@@ -1,21 +1,22 @@
 import puppeteer from "puppeteer";
 import {Collection, Db, FindCursor, MongoClient, ObjectId, WithId} from "mongodb";
+import {CATALOG_COLLECTION, CRAWLER_INDEX_CATEGORY_COLLECTION, DB_NAME} from "../constant";
 let browser: any;
 let page: any;
 let db : Db;
 
 const client: MongoClient = new MongoClient("mongodb://127.0.0.1:27017/");
-db = client.db("nontonyu");
-db.collection("catalog").findOne().then(test => {
+db = client.db(DB_NAME);
+db.collection(CATALOG_COLLECTION).findOne().then(test => {
     console.log(test);
 }).catch(err => {
     console.log(err);
 });
 
 async function funcSearchTitle() {
-    const catalog = await db.collection("crawler_index_category")
+    const catalog = await db.collection(CRAWLER_INDEX_CATEGORY_COLLECTION)
         .find({ name: "catalog" }).next().then(result => {
-        return result;
+           return result ? result["name"]:'';
     });
     if(catalog) {
 
