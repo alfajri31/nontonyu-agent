@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "npx ts-node myanimelist/connection.ts",
-    "test": "jest myanimelist/test"
+    "start": "npx ts-node myanimelist/sample-connection.ts",
+    "test": "jest myanimelist/test --detectOpenHandles --forceExit"
   },
   "type": "commonjs",
   "author": "",

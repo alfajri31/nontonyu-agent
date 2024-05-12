@@ -1,42 +1,49 @@
 import CrawlerIndexCategory from "../model/CrawlerIndexCategory";
 import CrawlerIndex, {ICrawlerIndex} from "../model/CrawlerIndex";
+import crawlerIndex from "../model/CrawlerIndex";
 
-const alphabetical = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v'
+const alphabetical =
+    ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v'
     ,'w','x','y','z']
 
 export async function searchService() {
-    const categoryCrawlerCategory = await CrawlerIndexCategory.findOne({name:"catalog"});
-    if(categoryCrawlerCategory) {
-        const object = await searchLockService();
-        // const crawlerIndex = <ICrawlerIndex>{}
-        // crawlerIndex.indexed=true;
-        // crawlerIndex.category =categoryCrawlerCategory.get("name");
-        // crawlerIndex.letterLock="a";
-        // crawlerIndex.result=0;
-        // await CrawlerIndex.create(crawlerIndex);
+    const categoryCrawlerCategory = await CrawlerIndexCategory.findOne({name: "catalog"});
+    const crawlerIndex = <ICrawlerIndex>{};
+    if (categoryCrawlerCategory) {
+        crawlerIndex.indexed = true;
+        crawlerIndex.category = categoryCrawlerCategory.get("name");
+        crawlerIndex.letterLock = await searchLockService();
+        crawlerIndex.result = 0;
+        await CrawlerIndex.create(crawlerIndex);
     }
-    return null;
+    return crawlerIndex.letterLock;
 }
 
 export async function searchLockService() {
     const searchCap = await CrawlerIndex.findOne();
-
     if(searchCap) {
         let rangeCap = searchCap.get("rangeCap");
         let currentLetterLength = searchCap.get("letterLock").length;
         if(searchCap.get("letterLock")=="" || currentLetterLength != rangeCap) {
             let currentLock : string;
-            searchCap.get("letterLock").replace(/[^\d,.]+/g,"a")
+            currentLock = searchCap.get("letterLock").replace(/[^\d,.]+/g,"a")
             for(let i=0;i<searchCap.get("rangeCap")-1;i++) {
-                currentLock = searchCap.get("letterLock");
                 currentLock = currentLock+"a";
                 searchCap.set("letterLock",currentLock);
                 await searchCap.replaceOne(searchCap);
             }
+            return searchCap.get("letterLock");
         }
         else {
-
+            return searchCap.get("letterLock");
         }
     }
-    return searchCap;
+    else {
+        return "";
+    }
+
+}
+
+export async function isCompleted(size:number) {
+    return false;
 }

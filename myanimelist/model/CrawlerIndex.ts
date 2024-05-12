@@ -5,6 +5,7 @@ export interface ICrawlerIndex extends Document {
     indexed: boolean;
     result : 0;
     category:string;
+    completed: boolean;
     letterLock : string;
 }
 
@@ -15,7 +16,8 @@ const CrawlerIndex: Schema = new Schema({
     letterLock: {type:String,required:true},
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
-    rangeCap: {type:Number,default:2}
+    rangeCap: {type:Number,default:2},
+    completed: {type:Boolean,default:false}
 },{collection:"crawler_index"});
 
 export default mongoose.model<ICrawlerIndex>('crawlerIndex', CrawlerIndex);
