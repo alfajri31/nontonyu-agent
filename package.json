@@ -1,0 +1,23 @@
+{
+  "name": "nontonyu-agent",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx ts-node myanimelist/connection.ts",
+    "test": "jest myanimelist"
+  },
+  "type": "commonjs",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongodb": "^6.6.1",
+    "mongoose": "^8.3.4",
+    "puppeteer": "^22.8.0",
+    "ts-jest": "^29.1.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12"
+  },
+  "description": ""
+}
