@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
 import {isCompleted, searchService} from "../../services/services";
-import conn from "../../database/conn";
+import conn from "../../database/dbConn";
 let browser: any;
 let page: any;
 
