@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer";
 import mongoose, {connect, Schema} from "mongoose";
-import Catalog, {ICatalog} from "../model/Catalog";
-import {isCompleted, searchService} from "../services/services";
+import Catalog from "../../model/Catalog";
+import {isCompleted, searchService} from "../../services/services";
 let browser: any;
 let page: any;
 
@@ -30,7 +30,7 @@ describe('search anime', () => {
         const searchTitle = await searchService();
         await page.type('#topSearchText',searchTitle);
         await page.click('#myanimelist > div.wrapper > div.top_signup.ga-impression');
-        await page.type('#topSearchText');
+        await page.type('#topSearchText',searchTitle);
     },50000);
     it('How many anime that appear', async() => {
         const parent = await page.$$eval(
