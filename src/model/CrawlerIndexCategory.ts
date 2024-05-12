@@ -13,4 +13,4 @@ const CrawlerIndexCategory: Schema = new Schema({
     updatedAt: { type: Date, default: Date.now }
 },{collection:"crawler_index_category"});
 
-export default mongoose.model<ICrawlerIndexCategory>('crawler_index_category', CrawlerIndexCategory);
+export default mongoose.model<ICrawlerIndexCategory>('crawlerIndexCategory', CrawlerIndexCategory);

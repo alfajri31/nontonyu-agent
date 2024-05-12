@@ -11,4 +11,5 @@ const CatalogTypeSchema: Schema = new Schema({
     updatedAt: { type: Date, default: Date.now }
 },{collection:"catalog_type"});
 
-export default mongoose.model<ICatalogType>('catalog_type', CatalogTypeSchema);
+
+export default mongoose.model<ICatalogType>('catalogType', CatalogTypeSchema);

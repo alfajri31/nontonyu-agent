@@ -1,4 +1,5 @@
 import {ObjectId} from "mongodb";
+import CatalogType from "../../model/CatalogType";
 
 
 export const crawlerIndexCategorySeed = [
@@ -14,7 +15,7 @@ export const crawlerIndexSeed = [
         category:"catalog",
         completed: false,
         letterLock : "a",
-        type: "Anime",
+        type:{type:"Anime"}
     }
 ];
 

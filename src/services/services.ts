@@ -1,22 +1,26 @@
 import CrawlerIndexCategory from "../model/CrawlerIndexCategory";
 import CrawlerIndex, {ICrawlerIndex} from "../model/CrawlerIndex";
 import crawlerIndex from "../model/CrawlerIndex";
+import CatalogType from "../model/CatalogType";
 
 const alphabetical =
     ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v'
     ,'w','x','y','z']
 
 export async function searchService(type:string) {
-    const categoryCrawlerCategory = await CrawlerIndexCategory.findOne({name: "catalog"});
-    const crawlerIndex = <ICrawlerIndex>{};
-    if (categoryCrawlerCategory) {
-        crawlerIndex.indexed = true;
-        crawlerIndex.category = categoryCrawlerCategory.get("name");
-        crawlerIndex.letterLock = await searchLockService();
-        crawlerIndex.result = 0;
-        await CrawlerIndex.replaceOne({type:type},crawlerIndex)
+    let currentType = await CatalogType.find({type:type});
+    if(currentType) {
+        const categoryCrawlerCategory = await CrawlerIndexCategory.findOne({name: "catalog"});
+        const crawlerIndex = <ICrawlerIndex>{};
+        if (categoryCrawlerCategory) {
+            crawlerIndex.indexed = true;
+            crawlerIndex.category = categoryCrawlerCategory.get("name");
+            crawlerIndex.letterLock = await searchLockService();
+            crawlerIndex.result = 0;
+            await CrawlerIndex.replaceOne({type:currentType},crawlerIndex)
+        }
+        return crawlerIndex.letterLock;
     }
-    return crawlerIndex.letterLock;
 }
 
 export async function searchLockService() {
