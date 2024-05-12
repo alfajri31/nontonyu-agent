@@ -12,3 +12,7 @@ const schema = new Schema({
 });
 
 export const Catalog: ICatalogModel = model<ICatalog, ICatalogModel>('Catalog', schema);
+
+// export default class Catalog {
+//     constructor(public title: string) {}
+// }
