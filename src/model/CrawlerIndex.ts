@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import {Int32} from "mongodb";
+import {ICatalogAnime} from "./CatalogAnime";
 
 export interface ICrawlerIndex extends Document {
     indexed: boolean;
@@ -7,6 +8,7 @@ export interface ICrawlerIndex extends Document {
     category:string;
     completed: boolean;
     letterLock : string;
+    type: string;
 }
 
 const CrawlerIndex: Schema = new Schema({
@@ -17,6 +19,7 @@ const CrawlerIndex: Schema = new Schema({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     rangeCap: {type:Number,default:2},
+    type: {type:String,default:"Anime"},
     completed: {type:Boolean,default:false}
 },{collection:"crawler_index"});
 

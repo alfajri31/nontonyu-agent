@@ -1,13 +1,11 @@
 import puppeteer from "puppeteer";
-import mongoose, {connect, Schema} from "mongoose";
-import Catalog from "../../model/Catalog";
 import {isCompleted, searchService} from "../../services/services";
+import conn from "../../database/conn";
 let browser: any;
 let page: any;
 
 beforeAll(async() => {
-    await mongoose.connect("mongodb://127.0.0.1/nontonyu");
-    await Catalog.findOne();
+    await conn;
     browser = await puppeteer.launch({
         headless: true,
         slowMo:30,
@@ -27,7 +25,7 @@ describe('search anime', () => {
         await page.click('#topSearchText');
     },50000);
     it('Type anime that you want', async() => {
-        const searchTitle = await searchService();
+        const searchTitle = await searchService("anime");
         await page.type('#topSearchText',searchTitle);
         await page.click('#myanimelist > div.wrapper > div.top_signup.ga-impression');
         await page.type('#topSearchText',searchTitle);

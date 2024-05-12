@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-export interface ICatalog extends Document {
+export interface ICatalogAnime extends Document {
     title: string;
     aired: string;
     broadcast : string;
@@ -17,8 +17,11 @@ export interface ICatalog extends Document {
     type: string;
 }
 
-const CatalogSchema: Schema = new Schema({
-    title: { type: String, required: true }
-},{collection:"catalog"});
 
-export default mongoose.model<ICatalog>('catalog', CatalogSchema);
+const CatalogSchema: Schema = new Schema({
+    title: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
+},{collection:"catalog_anime"});
+
+export default mongoose.model<ICatalogAnime>('catalog_anime', CatalogSchema);
