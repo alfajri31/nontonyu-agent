@@ -14,7 +14,8 @@ const CrawlerIndex: Schema = new Schema({
     category: {type:String,required:true},
     letterLock: {type:String,required:true},
     createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
+    updatedAt: { type: Date, default: Date.now },
+    rangeCap: {type:Number,default:2}
 },{collection:"crawler_index"});
 
 export default mongoose.model<ICrawlerIndex>('crawlerIndex', CrawlerIndex);

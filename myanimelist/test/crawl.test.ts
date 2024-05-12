@@ -1,11 +1,9 @@
 import puppeteer from "puppeteer";
 import mongoose, {connect, Schema} from "mongoose";
 import Catalog, {ICatalog} from "../model/Catalog";
-import {funcSearchTitle} from "../services/services";
+import {searchService} from "../services/services";
 let browser: any;
 let page: any;
-
-
 
 beforeAll(async() => {
     await mongoose.connect("mongodb://127.0.0.1/nontonyu");
@@ -27,7 +25,7 @@ describe('search anime', () => {
         await page.click('#topSearchText');
     },50000);
     it('type anime that you want', async() => {
-        const searchTitle = await funcSearchTitle();
+        const searchTitle = await searchService();
         await page.type('#topSearchText',searchTitle);
     },50000);
 });
