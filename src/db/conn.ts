@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, {startSession} from "mongoose";
 import {catalogTypeSeed, crawlerIndexCategorySeed, crawlerIndexSeed} from "./seed/data";
 import CatalogAnime from "../model/CatalogAnime";
 import CatalogType from "../model/CatalogType";
@@ -15,11 +15,12 @@ export default (async()=> {
         }
     });
     await CrawlerIndex.createCollection().then(async (r) => {
-        const data = await r.findOne();
+        const data = await CrawlerIndex.findOne();
         if(!data) {
-            await r.insertMany(crawlerIndexSeed);
+            await CrawlerIndex.insertMany(crawlerIndexSeed);
         }
     });
+
     await CrawlerIndexCategory.createCollection().then(async (r) => {
         const data = await r.findOne();
         if(!data) {

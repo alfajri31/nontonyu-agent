@@ -15,7 +15,7 @@ export const crawlerIndexSeed = [
         category:"catalog",
         completed: false,
         letterLock : "a",
-        type:{type:"Anime"}
+        type: new ObjectId('')
     }
 ];
 

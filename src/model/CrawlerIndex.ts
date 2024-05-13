@@ -1,6 +1,5 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, {Schema, Document, Mongoose} from 'mongoose';
 import CatalogType from "./CatalogType";
-import CatalogTypeSchema from "./CatalogType";
 
 export interface ICrawlerIndex extends Document {
     indexed: boolean;
@@ -8,7 +7,7 @@ export interface ICrawlerIndex extends Document {
     category:string;
     completed: boolean;
     letterLock : string;
-    type: Object
+    type: mongoose.Types.ObjectId;
 }
 
 const CrawlerIndex: Schema = new Schema({
@@ -19,8 +18,14 @@ const CrawlerIndex: Schema = new Schema({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     rangeCap: {type:Number,default:2},
-    type: {type:CatalogTypeSchema.schema},
+    type: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'catalogType'
+    }],
     completed: {type:Boolean,default:false}
-},{collection:"crawler_index"});
+},{
+    collection:"crawler_index"
+});
+
 
 export default mongoose.model<ICrawlerIndex>('crawlerIndex', CrawlerIndex);

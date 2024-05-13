@@ -2,14 +2,15 @@ import CrawlerIndexCategory from "../model/CrawlerIndexCategory";
 import CrawlerIndex, {ICrawlerIndex} from "../model/CrawlerIndex";
 import crawlerIndex from "../model/CrawlerIndex";
 import CatalogType from "../model/CatalogType";
+import mongoose from "mongoose";
 
 const alphabetical =
     ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v'
     ,'w','x','y','z']
 
 export async function searchService(type:string) {
-    let currentType = await CatalogType.find({type:type});
-    if(currentType) {
+    const currentType = await CatalogType.findOne({type:type});
+    if(currentType!==null) {
         const categoryCrawlerCategory = await CrawlerIndexCategory.findOne({name: "catalog"});
         const crawlerIndex = <ICrawlerIndex>{};
         if (categoryCrawlerCategory) {
@@ -17,10 +18,11 @@ export async function searchService(type:string) {
             crawlerIndex.category = categoryCrawlerCategory.get("name");
             crawlerIndex.letterLock = await searchLockService();
             crawlerIndex.result = 0;
-            await CrawlerIndex.replaceOne({type:currentType},crawlerIndex)
+            await CrawlerIndex.create(crawlerIndex);
         }
         return crawlerIndex.letterLock;
     }
+    return "";
 }
 
 export async function searchLockService() {

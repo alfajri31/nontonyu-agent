@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
 import {isCompleted, searchService} from "../../services/services";
-import conn from "../../database/dbConn";
+import conn from "../../db/conn";
 let browser: any;
 let page: any;
 
@@ -25,7 +25,7 @@ describe('search anime', () => {
         await page.click('#topSearchText');
     },50000);
     it('Type anime that you want', async() => {
-        const searchTitle = await searchService("anime");
+        const searchTitle = await searchService("Anime");
         await page.type('#topSearchText',searchTitle);
         await page.click('#myanimelist > div.wrapper > div.top_signup.ga-impression');
         await page.type('#topSearchText',searchTitle);
