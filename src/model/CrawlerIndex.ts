@@ -1,4 +1,4 @@
-import mongoose, {Schema, Document, Mongoose} from 'mongoose';
+import mongoose, {Document, Schema} from 'mongoose';
 import CatalogType from "./CatalogType";
 
 export interface ICrawlerIndex extends Document {
@@ -18,14 +18,14 @@ const CrawlerIndex: Schema = new Schema({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     rangeCap: {type:Number,default:2},
-    type: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'catalogType'
-    }],
+    type: {
+        type: CatalogType.schema,
+        ref: 'CatalogType'
+    },
     completed: {type:Boolean,default:false}
 },{
     collection:"crawler_index"
 });
 
 
-export default mongoose.model<ICrawlerIndex>('crawlerIndex', CrawlerIndex);
+export default mongoose.model<ICrawlerIndex>('CrawlerIndex', CrawlerIndex);

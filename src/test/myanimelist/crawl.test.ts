@@ -1,6 +1,8 @@
 import puppeteer from "puppeteer";
 import {isCompleted, searchService} from "../../services/services";
 import conn from "../../db/conn";
+import {SearchParam} from "../../model/parameters/ISearchParam";
+
 let browser: any;
 let page: any;
 
@@ -14,10 +16,9 @@ beforeAll(async() => {
 });
 afterAll(async () => {
     await browser.close()
-    process.exit();
 });
 describe('search anime', () => {
-    it('Open myanimelist', async() => {
+    it('Open Myanimelist', async() => {
         page = await browser.newPage();
         await page.goto("https://myanimelist.net");
     },50000);
@@ -25,7 +26,8 @@ describe('search anime', () => {
         await page.click('#topSearchText');
     },50000);
     it('Type anime that you want', async() => {
-        const searchTitle = await searchService("Anime");
+        const searchParam = <SearchParam>{};
+        const searchTitle = await searchService(searchParam);
         await page.type('#topSearchText',searchTitle);
         await page.click('#myanimelist > div.wrapper > div.top_signup.ga-impression');
         await page.type('#topSearchText',searchTitle);
@@ -36,7 +38,8 @@ describe('search anime', () => {
             (els: any[]) => els.map(e => e.children)
         );
         let size = Object.keys(parent[0]).length;
-        const searchTitle = await isCompleted(size);
+        const searchParam = <SearchParam>{};
+        const searchTitle = await isCompleted(searchParam);
     },50000);
 });
 

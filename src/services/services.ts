@@ -1,15 +1,10 @@
 import CrawlerIndexCategory from "../model/CrawlerIndexCategory";
 import CrawlerIndex, {ICrawlerIndex} from "../model/CrawlerIndex";
-import crawlerIndex from "../model/CrawlerIndex";
 import CatalogType from "../model/CatalogType";
-import mongoose from "mongoose";
+import {SearchParam} from "../model/parameters/ISearchParam";
 
-const alphabetical =
-    ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v'
-    ,'w','x','y','z']
-
-export async function searchService(type:string) {
-    const currentType = await CatalogType.findOne({type:type});
+export async function searchService(searchParam: SearchParam) {
+    const currentType = await CatalogType.findOne({type:searchParam.type});
     if(currentType!==null) {
         const categoryCrawlerCategory = await CrawlerIndexCategory.findOne({name: "catalog"});
         const crawlerIndex = <ICrawlerIndex>{};
@@ -18,8 +13,11 @@ export async function searchService(type:string) {
             crawlerIndex.category = categoryCrawlerCategory.get("name");
             crawlerIndex.letterLock = await searchLockService();
             crawlerIndex.result = 0;
-            await CrawlerIndex.create(crawlerIndex);
+            crawlerIndex.type = currentType.get("_id");
+            await CrawlerIndex.replaceOne({},crawlerIndex);
         }
+        const posts = await CrawlerIndex.findOne();
+        const idType = posts?.get("type")._id;
         return crawlerIndex.letterLock;
     }
     return "";
@@ -50,6 +48,11 @@ export async function searchLockService() {
 
 }
 
-export async function isCompleted(size:number) {
+export async function isCompleted(searchParam: SearchParam) {
+    /**
+     * Algorithm
+     * Jika size list adalah 5 maka
+     * Masukan data list anmime sebanyak 5 dengan go_into_page kemudian elemen yang relevan
+     */
     return false;
 }

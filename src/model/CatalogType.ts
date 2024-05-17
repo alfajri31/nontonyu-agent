@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, {Document, Schema} from 'mongoose';
 
 
 export interface ICatalogType extends Document {
@@ -12,4 +12,4 @@ const CatalogTypeSchema: Schema = new Schema({
 },{collection:"catalog_type"});
 
 
-export default mongoose.model<ICatalogType>('catalogType', CatalogTypeSchema);
+export default mongoose.model<ICatalogType>('CatalogType', CatalogTypeSchema);

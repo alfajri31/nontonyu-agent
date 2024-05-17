@@ -1,4 +1,4 @@
-import {Collection, Db, MongoClient, ObjectId, WithId} from "mongodb";
+import {Db, MongoClient} from "mongodb";
 
 (async () => {
     const client: MongoClient = new MongoClient("mongodb://127.0.0.1:27017/");

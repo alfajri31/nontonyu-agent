@@ -1,4 +1,4 @@
-import mongoose, {startSession} from "mongoose";
+import mongoose from "mongoose";
 import {catalogTypeSeed, crawlerIndexCategorySeed, crawlerIndexSeed} from "./seed/data";
 import CatalogAnime from "../model/CatalogAnime";
 import CatalogType from "../model/CatalogType";

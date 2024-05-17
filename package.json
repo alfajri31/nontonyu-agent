@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npx ts-node src/myanimelist/sample-connection.ts",
-    "test": "jest notes/test --detectOpenHandles --forceExit"
+    "test": "jest notes/test --runInBand --detectOpenHandles --forceExit"
   },
   "type": "commonjs",
   "author": "",

@@ -1,5 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
-import {ICatalogAnime} from "./CatalogAnime";
+import mongoose, {Document, Schema} from 'mongoose';
 
 export interface ICrawlerIndexCategory extends Document {
     name: string;
@@ -13,4 +12,4 @@ const CrawlerIndexCategory: Schema = new Schema({
     updatedAt: { type: Date, default: Date.now }
 },{collection:"crawler_index_category"});
 
-export default mongoose.model<ICrawlerIndexCategory>('crawlerIndexCategory', CrawlerIndexCategory);
+export default mongoose.model<ICrawlerIndexCategory>('CrawlerIndexCategory', CrawlerIndexCategory);
