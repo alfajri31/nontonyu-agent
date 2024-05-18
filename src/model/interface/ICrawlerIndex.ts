@@ -7,4 +7,7 @@ export interface ICrawlerIndex extends Document {
     completed: boolean;
     letterLock : string;
     tipe: mongoose.Types.ObjectId;
+    createdAt: Date;
+    updatedAt: Date;
+    rangeCap: number;
 }

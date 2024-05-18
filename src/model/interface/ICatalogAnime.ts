@@ -1,4 +1,4 @@
-import {Document} from "mongoose";
+import {Document, Expression, Schema} from "mongoose";
 
 export interface ICatalogAnime extends Document {
     title: string;
@@ -15,4 +15,6 @@ export interface ICatalogAnime extends Document {
     studios: string;
     themes: string;
     type: string;
+    createdAt: Date;
+    updatedAt: Date;
 }

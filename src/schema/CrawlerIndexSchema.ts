@@ -2,7 +2,7 @@ import mongoose, {Schema} from 'mongoose';
 import {ICrawlerIndex} from "../model/interface/ICrawlerIndex";
 
 
-export const CrawlerIndexSchema: Schema = new Schema({
+export const CrawlerIndexSchema: Schema<ICrawlerIndex> = new Schema({
     indexed: { type: Boolean, required: true },
     result: {type: Number,required:true},
     category: {type:String,required:true},
@@ -17,4 +17,4 @@ export const CrawlerIndexSchema: Schema = new Schema({
     strictPopulate:false
 });
 
-export const CrawlerIndex = mongoose.model<ICrawlerIndex>('CrawlerIndex', CrawlerIndexSchema);
+export const CrawlerIndex = mongoose.model('CrawlerIndex', CrawlerIndexSchema);
