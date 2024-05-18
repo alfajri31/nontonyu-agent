@@ -18,3 +18,14 @@ export async function getHref(page : Page,selector:string):Promise<string[]> {
     return hrefs;
 }
 
+export async function getText(page : Page,selector:string) :Promise<string>{
+    let text : string;
+    try{
+        const element = await page.$(selector);
+        // @ts-ignore
+        text = await page.evaluate((el: { innerText: any; }) => el.innerText, element)
+    }catch (e){}
+    // @ts-ignore
+    return text;
+}
+
