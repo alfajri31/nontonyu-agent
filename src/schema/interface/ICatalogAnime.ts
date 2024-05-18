@@ -1,6 +1,7 @@
 export interface ICatalogAnime  {
-    synopsis : string;
+    type: string;
     title: string;
+    synopsis : string;
     aired: string;
     broadcast : string;
     duration:string;
@@ -13,7 +14,7 @@ export interface ICatalogAnime  {
     source: string;
     studios: string;
     themes: string;
-    type: string;
+    score: string;
     createdAt: Date;
     updatedAt: Date;
 }

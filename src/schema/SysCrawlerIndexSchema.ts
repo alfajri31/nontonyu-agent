@@ -2,7 +2,7 @@ import mongoose, {Schema} from 'mongoose';
 import {ICrawlerIndex} from "./interface/ICrawlerIndex";
 
 
-export const CrawlerIndexSchema: Schema<ICrawlerIndex> = new Schema({
+export const SysCrawlerIndexSchema: Schema<ICrawlerIndex> = new Schema({
     indexed: { type: Boolean, required: true },
     result: {type: Number,required:true},
     category: {type:String,required:true},
@@ -12,11 +12,11 @@ export const CrawlerIndexSchema: Schema<ICrawlerIndex> = new Schema({
     rangeCap: {type:Number,default:2},
     tipe: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:"CatalogType"
+        ref:"SysCatalogType"
     },
     completed: {type:Boolean,default:false}
 },{
-    collection:"crawler_index"
+    collection:"sys_crawler_index"
 });
 
-export const CrawlerIndex = mongoose.model('CrawlerIndex', CrawlerIndexSchema);
+export const SysCrawlerIndex = mongoose.model('SysCrawlerIndex', SysCrawlerIndexSchema);

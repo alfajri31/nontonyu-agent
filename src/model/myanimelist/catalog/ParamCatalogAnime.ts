@@ -36,4 +36,6 @@ export class ParamCatalogAnime implements ICatalogAnime{
     type: string;
     @IsNotEmpty()
     updatedAt: Date;
+    @IsNotEmpty()
+    score: string;
 }

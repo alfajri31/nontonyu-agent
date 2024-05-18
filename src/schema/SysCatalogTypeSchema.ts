@@ -1,18 +1,18 @@
 import mongoose, {Schema} from 'mongoose';
 import {ICatalogType} from "./interface/ICatalogType";
 
-export const CatalogTypeSchema: Schema<ICatalogType> = new Schema({
+export const SysCatalogTypeSchema: Schema<ICatalogType> = new Schema({
     tipe: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 },{
-    collection:"catalog_type"
+    collection:"sys_catalog_type"
 });
 
-CatalogTypeSchema.virtual("crawlerIndexes", {
-    ref: "CrawlerIndex",
+SysCatalogTypeSchema.virtual("crawlerIndexes", {
+    ref: "SysCrawlerIndex",
     localField: '_id',
     foreignField: 'tipe'
 })
 
-export const CatalogType = mongoose.model('CatalogType', CatalogTypeSchema);
+export const SysCatalogType = mongoose.model('SysCatalogType', SysCatalogTypeSchema);

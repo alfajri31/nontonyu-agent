@@ -18,6 +18,7 @@ export const CatalogAnimeSchema: Schema<ICatalogAnime> = new Schema({
     studios: { type: String, required: true },
     themes: { type: String, required: true },
     type: { type: String, required: true },
+    score : { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 },{collection:"catalog_anime"});

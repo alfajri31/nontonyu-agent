@@ -1,48 +1,47 @@
 import mongoose from "mongoose";
-import {CatalogTypeSeed, CrawlerIndexCategorySeed, CrawlerIndexSeed,} from "./seed/data";
 import {CatalogAnime} from "../schema/CatalogAnimeSchema";
-import {CatalogType} from "../schema/CatalogTypeSchema";
-import {CrawlerIndex} from "../schema/CrawlerIndexSchema";
-import {CrawlerIndexCategory} from "../schema/CrawlerIndexCategorySchema";
-
+import {SysCatalogType} from "../schema/SysCatalogTypeSchema";
+import {SysCrawlerIndex} from "../schema/SysCrawlerIndexSchema";
+import {SysCrawlerIndexCategory} from "../schema/SysCrawlerIndexCategorySchema";
+import {SysCatalogTypeSeed, SysCrawlerIndexCategorySeed, SysCrawlerIndexSeed} from "./seed/data";
 
 export default (async()=> {
     await mongoose.connect("mongodb://127.0.0.1/nontonyu");
     await CatalogAnime.createCollection();
-    await CatalogType.createCollection().then(async (r) => {
+    await SysCatalogType.createCollection().then(async (r) => {
         const data = await r.findOne();
         if (!data) {
-           return await r.insertMany(CatalogTypeSeed);
+           return await r.insertMany(SysCatalogTypeSeed);
         }
     }).then(async (result) => {
-        await CrawlerIndex.createCollection().then(async (r) => {
-            let data = await CrawlerIndex.findOne();
+        await SysCrawlerIndex.createCollection().then(async (r) => {
+            let data = await SysCrawlerIndex.findOne();
             if (!data) {
-                CrawlerIndexSeed.forEach(seed => {
+                SysCrawlerIndexSeed.forEach(seed => {
                     // @ts-ignore
                     seed.tipe = result['insertedIds'][0];
                 });
-                await CrawlerIndex.insertMany(CrawlerIndexSeed);
+                await SysCrawlerIndex.insertMany(SysCrawlerIndexSeed);
             }
         });
     });
-    await CrawlerIndexCategory.createCollection().then(async (r) => {
+    await SysCrawlerIndexCategory.createCollection().then(async (r) => {
         const data = await r.findOne();
         if(!data) {
-            await r.insertMany(CrawlerIndexCategorySeed);
+            await r.insertMany(SysCrawlerIndexCategorySeed);
         }
     });
-    await CrawlerIndexCategory.createCollection();
+    await SysCrawlerIndexCategory.createCollection();
     /**
      * test Relationship
      */
-    let testRelationOneToMany = await CatalogType.find().populate("crawlerIndexes");
+    let testRelationOneToMany = await SysCatalogType.find().populate("crawlerIndexes");
     testRelationOneToMany.forEach(data => {
         if(data.$getPopulatedDocs().length>0) {
             console.log("one to many",data);
             console.log(data.$getPopulatedDocs())
         }
     });
-    let testRelationManyToOne = await CrawlerIndex.findOne().populate("tipe");
+    let testRelationManyToOne = await SysCrawlerIndex.findOne().populate("tipe");
     console.log("many to one",testRelationManyToOne);
 })();

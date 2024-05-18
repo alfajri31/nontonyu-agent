@@ -3,7 +3,6 @@ import init from "../../db/init";
 import {CatalogServices} from "../../services/CatalogServices";
 import {EnumCatalogTypes} from "../../enum/EnumCatalogTypes";
 import { ParamInitBasedType } from "../../model/global/catalog/ParamInitBasedType";
-import {ParamCatalogAnime} from "../../model/myanimelist/catalog/ParamCatalogAnime";
 import {getHref} from "../../util/CrawlerUtil";
 
 ;
@@ -14,7 +13,7 @@ let page: any;
 beforeAll(async() => {
     await init;
     browser = await puppeteer.launch({
-        headless: true,
+        headless: false,
         slowMo:50,
         args: [ '--ignore-certificate-errors','--no-sandbox'],
     })
@@ -49,7 +48,7 @@ describe('search anime', () => {
         for (const link of href) {
             await page.goto(link);
         }
-    },50000);
+    });
 });
 
 

@@ -1,19 +1,18 @@
-import {validate} from "class-validator";
-import {CatalogType} from "../schema/CatalogTypeSchema";
-import {CrawlerIndexCategory} from "../schema/CrawlerIndexCategorySchema";
 import {EnumCategoryCrawl} from "../enum/EnumCategoryCrawl";
 import {ParamInitBasedType} from "../model/global/catalog/ParamInitBasedType";
-import {CrawlerIndex} from "../schema/CrawlerIndexSchema";
 import {ICrawlerIndex} from "../schema/interface/ICrawlerIndex";
 import {ParamCatalogAnime} from "../model/myanimelist/catalog/ParamCatalogAnime";
 import {validation} from "../util/ValidationUtil";
+import {SysCrawlerIndex} from "../schema/SysCrawlerIndexSchema";
+import {SysCrawlerIndexCategory} from "../schema/SysCrawlerIndexCategorySchema";
+import {SysCatalogType} from "../schema/SysCatalogTypeSchema";
 
 export class CatalogServices {
     async searchService(initBasedType : ParamInitBasedType) : Promise<string> {
        await validation(initBasedType);
-        const currentType = await CatalogType.findOne({tipe: initBasedType.type});
+        const currentType = await SysCatalogType.findOne({tipe: initBasedType.type});
         if (currentType !== null) {
-            const categoryCrawlerCategory = await CrawlerIndexCategory.findOne({name: EnumCategoryCrawl.CATALOG});
+            const categoryCrawlerCategory = await SysCrawlerIndexCategory.findOne({name: EnumCategoryCrawl.CATALOG});
             const crawlerIndex = <ICrawlerIndex>{};
             if (categoryCrawlerCategory) {
                 crawlerIndex.indexed = true;
@@ -21,7 +20,7 @@ export class CatalogServices {
                 crawlerIndex.letterLock = String(await this.searchLockService());
                 crawlerIndex.result = 0;
                 crawlerIndex.tipe = Object(currentType.get("_id"));
-                await CrawlerIndex.replaceOne({}, crawlerIndex);
+                await SysCrawlerIndex.replaceOne({}, crawlerIndex);
             }
             return crawlerIndex.letterLock;
         }
@@ -29,7 +28,7 @@ export class CatalogServices {
     }
 
     async searchLockService() {
-        const searchCap = await CrawlerIndex.findOne();
+        const searchCap = await SysCrawlerIndex.findOne();
         if(searchCap) {
             let rangeCap = searchCap.get("rangeCap");
             let currentLetterLength = String(searchCap.get("letterLock")).length;

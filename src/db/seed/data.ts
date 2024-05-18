@@ -1,7 +1,7 @@
 import {EnumCatalogTypes} from "../../enum/EnumCatalogTypes";
 import {EnumCategoryCrawl} from "../../enum/EnumCategoryCrawl";
 
-export const CrawlerIndexCategorySeed :
+export const SysCrawlerIndexCategorySeed :
     {
         name: string
     }[] = [
@@ -10,7 +10,7 @@ export const CrawlerIndexCategorySeed :
     }
 ];
 
-export const CrawlerIndexSeed : {
+export const SysCrawlerIndexSeed : {
     result: number;
     indexed: boolean;
     completed: boolean;
@@ -30,7 +30,7 @@ export const CrawlerIndexSeed : {
 
 
 
-export const CatalogTypeSeed : (
+export const SysCatalogTypeSeed : (
     {
         tipe: string
     }

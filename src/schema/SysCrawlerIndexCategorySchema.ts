@@ -2,10 +2,10 @@ import mongoose, {Schema} from 'mongoose';
 import {ICrawlerIndexCategory} from "./interface/ICrawlerIndexCategory";
 
 
-export const CrawlerIndexCategorySchema: Schema<ICrawlerIndexCategory> = new Schema({
+export const SysCrawlerIndexCategorySchema: Schema<ICrawlerIndexCategory> = new Schema({
     name: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
-},{collection:"crawler_index_category"});
+},{collection:"sys_crawler_index_category"});
 
-export const CrawlerIndexCategory = mongoose.model('CrawlerIndexCategory', CrawlerIndexCategorySchema);
+export const SysCrawlerIndexCategory = mongoose.model('SysCrawlerIndexCategory', SysCrawlerIndexCategorySchema);
