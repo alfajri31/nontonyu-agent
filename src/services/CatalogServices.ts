@@ -6,7 +6,9 @@ import {validation} from "../util/ValidationUtil";
 import {SysCrawlerIndex} from "../schema/SysCrawlerIndexSchema";
 import {SysCrawlerIndexCategory} from "../schema/SysCrawlerIndexCategorySchema";
 import {SysCatalogType} from "../schema/SysCatalogTypeSchema";
+import {Injectable} from "../decorator/Decorator";
 
+@Injectable("catalogService")
 export class CatalogServices {
     async searchService(initBasedType : ParamInitBasedType) : Promise<string> {
        await validation(initBasedType);

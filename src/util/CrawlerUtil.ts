@@ -1,7 +1,5 @@
-import {Page} from "puppeteer";
-import {ParamCatalogAnimeTv} from "../model/myanimelist/catalog/ParamCatalogAnimeTv";
-
-export async function getHref(page : Page,selector:string):Promise<string[]> {
+import {page} from "../test/myanimelist/crawl.test";
+export async function getHref(selector:string):Promise<string[]> {
     const parent = await page.$$eval("#topSearchResultList",
         (els: any[]) => els.map((e,index) => e.children)
     );
@@ -17,8 +15,7 @@ export async function getHref(page : Page,selector:string):Promise<string[]> {
     }
     return hrefs;
 }
-
-export async function getText(page : Page,selector:string) :Promise<string>{
+export async function getText(selector:string) :Promise<string>{
     let text : string;
     try{
         const element = await page.$(selector);

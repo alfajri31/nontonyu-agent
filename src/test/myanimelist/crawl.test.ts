@@ -4,12 +4,11 @@ import {CatalogServices} from "../../services/CatalogServices";
 import {EnumCatalogTypes} from "../../enum/EnumCatalogTypes";
 import { ParamInitBasedType } from "../../model/global/catalog/ParamInitBasedType";
 import {getHref, getText} from "../../util/CrawlerUtil";
-import {CatalogAnimeTv} from "../../schema/CatalogAnimeSchemaTv";
 import {CatalogAnimeTvSelector} from "../../selector/CatalogAnimeTvSelector";
-import {Inject} from "../../decorator/Decorator";
+import {CatalogAnimeTv} from "../../schema/CatalogAnimeSchemaTv";
 
 let browser: any;
-let page: any;
+export let page: any;
 
 beforeAll(async() => {
     await init;
@@ -23,34 +22,30 @@ afterAll(async () => {
     await browser.close()
     try{process.exit()}catch (e) {}
 });
-describe('search anime', () => {
-    let catalogService : CatalogServices;
-    let initBasedType : ParamInitBasedType;
+describe('search anime',  () => {
+    let catalogService: CatalogServices = new CatalogServices();
+    let initBasedType: ParamInitBasedType = new ParamInitBasedType();
+    let catalogAnimeTvSelector: CatalogAnimeTvSelector = new CatalogAnimeTvSelector();
     let searchInitType: string;
-    let catalogAnimeSelector : CatalogAnimeTvSelector;
-    beforeAll(async() => {
-        initBasedType = new ParamInitBasedType();
-        catalogService = new CatalogServices();
-        catalogAnimeSelector = new CatalogAnimeTvSelector();
-    })
-    it('Init Based Type', async() => {
-        initBasedType.type=EnumCatalogTypes.ANIME;
+    it('Init Based Type', async () => {
+        initBasedType.type = EnumCatalogTypes.ANIME;
         searchInitType = await catalogService.searchService(initBasedType);
     });
-    it('Open gate MyAnimeList', async() => {
+    it('Open gate MyAnimeList', async () => {
         page = await browser.newPage();
         await page.goto("https://myanimelist.net");
     });
-    it('How many anime that appear in list', async() => {
+    it('How many anime that appear in list', async () => {
         await page.click('#topSearchText');
-        await page.type('#topSearchText',searchInitType);
+        await page.type('#topSearchText', searchInitType);
         await new Promise(r => setTimeout(r, 2000));
-        await page.type('#topSearchText'," ");
+        await page.type('#topSearchText', " ");
         await new Promise(r => setTimeout(r, 2000));
-        const href = await getHref(page,'#topSearchResultList');
+        const href = await getHref('#topSearchResultList');
         for (const link of href) {
             await page.goto(link);
-            await getText(page,catalogAnimeSelector.type);
+            const catalogAnimeTv = new CatalogAnimeTv();
+            catalogAnimeTv.title = await getText(catalogAnimeTvSelector.title);
         }
     });
 });
