@@ -5,10 +5,8 @@ import {CatalogType} from "../schema/CatalogTypeSchema";
 import {CrawlerIndexCategory} from "../schema/CrawlerIndexCategorySchema";
 import {ICrawlerIndex} from "../model/interface/ICrawlerIndex";
 import {CrawlerIndex} from "../schema/CrawlerIndexSchema";
-import {model} from "mongoose";
 
 
-@Injectable('catalogService')
 export class CatalogServices {
     async searchService(initBasedType : InitBasedType) {
         await validate(initBasedType).then(errors =>
