@@ -24,4 +24,4 @@ const CatalogAnimeSchema: Schema = new Schema({
     updatedAt: { type: Date, default: Date.now }
 },{collection:"catalog_anime"});
 
-export default mongoose.model<ICatalogAnime>('CatalogAnime', CatalogAnimeSchema);
+export default mongoose.model<ICatalogAnime>('catalogAnime', CatalogAnimeSchema);

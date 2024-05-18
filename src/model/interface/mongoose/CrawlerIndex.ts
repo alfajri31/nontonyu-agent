@@ -18,10 +18,7 @@ const CrawlerIndex: Schema = new Schema({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     rangeCap: {type:Number,default:2},
-    type: {
-        type: CatalogType.schema,
-        ref: 'CatalogType'
-    },
+    type: { type: mongoose.Schema.Types.ObjectId, ref: 'catalogType' },
     completed: {type:Boolean,default:false}
 },{
     collection:"crawler_index"

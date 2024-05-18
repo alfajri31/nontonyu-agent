@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
-import {catalogTypeSeed, crawlerIndexCategorySeed, crawlerIndexSeed} from "./seed/data";
+import {
+    CatalogTypeSeed, CrawlerIndexCategorySeed,
+    CrawlerIndexSeed,
+} from "./seed/data";
 import CatalogAnime from "../model/interface/mongoose/CatalogAnime";
 import CatalogType from "../model/interface/mongoose/CatalogType";
 import CrawlerIndex from "../model/interface/mongoose/CrawlerIndex";
 import CrawlerIndexCategory from "../model/interface/mongoose/CrawlerIndexCategory";
-
 
 export default (async()=> {
     await mongoose.connect("mongodb://127.0.0.1/nontonyu");
@@ -12,20 +14,24 @@ export default (async()=> {
     await CatalogType.createCollection().then(async (r) => {
         const data = await r.findOne();
         if (!data) {
-            await r.insertMany(catalogTypeSeed);
+           return await r.insertMany(CatalogTypeSeed);
         }
+    }).then(async (result) => {
+        await CrawlerIndex.createCollection().then(async (r) => {
+            let data = await CrawlerIndex.findOne();
+            if (!data) {
+                CrawlerIndexSeed.forEach(seed => {
+                    // @ts-ignore
+                    seed.type = result['0'];
+                });
+                await CrawlerIndex.insertMany(CrawlerIndexSeed);
+            }
+        });
     });
-    await CrawlerIndex.createCollection().then(async (r) => {
-        const data = await CrawlerIndex.findOne();
-        if(!data) {
-            await CrawlerIndex.insertMany(crawlerIndexSeed);
-        }
-    });
-
     await CrawlerIndexCategory.createCollection().then(async (r) => {
         const data = await r.findOne();
         if(!data) {
-            await r.insertMany(crawlerIndexCategorySeed);
+            await r.insertMany(CrawlerIndexCategorySeed);
         }
     });
 })();

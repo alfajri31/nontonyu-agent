@@ -12,4 +12,4 @@ const CatalogTypeSchema: Schema = new Schema({
 },{collection:"catalog_type"});
 
 
-export default mongoose.model<ICatalogType>('CatalogType', CatalogTypeSchema);
+export default mongoose.model<ICatalogType>('catalogType', CatalogTypeSchema);
