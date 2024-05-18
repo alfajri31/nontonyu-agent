@@ -1,4 +1,5 @@
 export interface ICatalogAnime  {
+    synopsis : string;
     title: string;
     aired: string;
     broadcast : string;

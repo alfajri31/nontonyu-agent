@@ -32,6 +32,10 @@ export default (async()=> {
             await r.insertMany(CrawlerIndexCategorySeed);
         }
     });
+    await CrawlerIndexCategory.createCollection();
+    /**
+     * test Relationship
+     */
     let testRelationOneToMany = await CatalogType.find().populate("crawlerIndexes");
     testRelationOneToMany.forEach(data => {
         if(data.$getPopulatedDocs().length>0) {

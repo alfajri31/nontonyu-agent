@@ -1,9 +1,10 @@
 import puppeteer from "puppeteer";
-import conn from "../../db/conn";;
+import init from "../../db/init";
 import {CatalogServices} from "../../services/CatalogServices";
 import {EnumCatalogTypes} from "../../enum/EnumCatalogTypes";
 import { ParamInitBasedType } from "../../model/global/catalog/ParamInitBasedType";
 import {ParamCatalogAnime} from "../../model/myanimelist/catalog/ParamCatalogAnime";
+import {getHref} from "../../util/CrawlerUtil";
 
 ;
 
@@ -11,7 +12,7 @@ let browser: any;
 let page: any;
 
 beforeAll(async() => {
-    await conn;
+    await init;
     browser = await puppeteer.launch({
         headless: true,
         slowMo:50,
@@ -44,17 +45,9 @@ describe('search anime', () => {
         await new Promise(r => setTimeout(r, 2000));
         await page.type('#topSearchText'," ");
         await new Promise(r => setTimeout(r, 2000));
-        const parent = await page.$$eval("#topSearchResultList",
-            (els: any[]) => els.map((e,index) => e.children)
-        );
-        let size = Object.keys(parent[0]).length;
-        const hrefs = [];
-        for(let i=0;i<=size-1;i++) {
-            const handle = await page.$('#topSearchResultList > div:nth-child('+i+') > div > a');
-            try {hrefs.push(await page.evaluate((els:{
-                getAttribute: (arg0: string) => any;
-            }) => els.getAttribute('href'), handle));}catch(e){}
-            const paramCatalogAnime = new ParamCatalogAnime();
+        const href = await getHref(page,'#topSearchResultList');
+        for (const link of href) {
+            await page.goto(link);
         }
     },50000);
 });

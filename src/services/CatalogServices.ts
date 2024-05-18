@@ -5,13 +5,12 @@ import {EnumCategoryCrawl} from "../enum/EnumCategoryCrawl";
 import {ParamInitBasedType} from "../model/global/catalog/ParamInitBasedType";
 import {CrawlerIndex} from "../schema/CrawlerIndexSchema";
 import {ICrawlerIndex} from "../schema/interface/ICrawlerIndex";
-import {ParamCrawlSize} from "../model/global/catalog/ParamCrawlSize";
 import {ParamCatalogAnime} from "../model/myanimelist/catalog/ParamCatalogAnime";
+import {validation} from "../util/ValidationUtil";
 
 export class CatalogServices {
     async searchService(initBasedType : ParamInitBasedType) : Promise<string> {
-        await validate(initBasedType).then(errors =>
-        {if(errors.length>0) {throw new Error(errors.toString());}});
+       await validation(initBasedType);
         const currentType = await CatalogType.findOne({tipe: initBasedType.type});
         if (currentType !== null) {
             const categoryCrawlerCategory = await CrawlerIndexCategory.findOne({name: EnumCategoryCrawl.CATALOG});
@@ -60,7 +59,7 @@ export class CatalogServices {
          * Jika size list adalah 5 maka
          * Masukan data list anime sebanyak 5 dengan go_into_page kemudian cek elemen yang relevan lagi
          */
-
-        return false;
+        await validation(paramCatalogAnime);
+        return true;
     }
 }
