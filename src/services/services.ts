@@ -1,9 +1,9 @@
 import CrawlerIndexCategory from "../model/CrawlerIndexCategory";
 import CrawlerIndex, {ICrawlerIndex} from "../model/CrawlerIndex";
 import CatalogType from "../model/CatalogType";
-import {SearchParam} from "../model/parameters/ISearchParam";
+import {ISearchParam} from "../model/interface/ISearchParam";
 
-export async function searchService(searchParam: SearchParam) {
+export async function searchService(searchParam: ISearchParam) {
     const currentType = await CatalogType.findOne({type:searchParam.type});
     if(currentType!==null) {
         const categoryCrawlerCategory = await CrawlerIndexCategory.findOne({name: "catalog"});
@@ -48,7 +48,7 @@ export async function searchLockService() {
 
 }
 
-export async function isCompleted(searchParam: SearchParam) {
+export async function isCompleted(searchParam: ISearchParam) {
     /**
      * Algorithm
      * Jika size list adalah 5 maka
