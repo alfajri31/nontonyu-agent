@@ -16,5 +16,4 @@ CatalogTypeSchema.virtual("crawlerIndexes", {
     foreignField: 'tipe'
 })
 
-
 export const CatalogType = mongoose.model('CatalogType', CatalogTypeSchema);

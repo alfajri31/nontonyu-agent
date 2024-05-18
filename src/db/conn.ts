@@ -35,4 +35,13 @@ export default (async()=> {
             await r.insertMany(CrawlerIndexCategorySeed);
         }
     });
+    let testRelationOneToMany = await CatalogType.find().populate("crawlerIndexes");
+    testRelationOneToMany.forEach(data => {
+        if(data.$getPopulatedDocs().length>0) {
+            console.log("one to many",data);
+            console.log(data.$getPopulatedDocs())
+        }
+    });
+    let testRelationManyToOne = await CrawlerIndex.findOne().populate("tipe");
+    console.log("many to one",testRelationManyToOne);
 })();
