@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 import {catalogTypeSeed, crawlerIndexCategorySeed, crawlerIndexSeed} from "./seed/data";
-import CatalogAnime from "../model/CatalogAnime";
-import CatalogType from "../model/CatalogType";
-import CrawlerIndex from "../model/CrawlerIndex";
-import CrawlerIndexCategory from "../model/CrawlerIndexCategory";
+import CatalogAnime from "../model/interface/mongoose/CatalogAnime";
+import CatalogType from "../model/interface/mongoose/CatalogType";
+import CrawlerIndex from "../model/interface/mongoose/CrawlerIndex";
+import CrawlerIndexCategory from "../model/interface/mongoose/CrawlerIndexCategory";
+
 
 export default (async()=> {
     await mongoose.connect("mongodb://127.0.0.1/nontonyu");

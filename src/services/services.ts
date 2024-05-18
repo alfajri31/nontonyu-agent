@@ -1,7 +1,8 @@
-import CrawlerIndexCategory from "../model/CrawlerIndexCategory";
-import CrawlerIndex, {ICrawlerIndex} from "../model/CrawlerIndex";
-import CatalogType from "../model/CatalogType";
 import {ISearchParam} from "../model/interface/ISearchParam";
+import CatalogType from "../model/interface/mongoose/CatalogType";
+import CrawlerIndexCategory from "../model/interface/mongoose/CrawlerIndexCategory";
+import CrawlerIndex, {ICrawlerIndex} from "../model/interface/mongoose/CrawlerIndex";
+
 
 export async function searchService(searchParam: ISearchParam) {
     const currentType = await CatalogType.findOne({type:searchParam.type});
