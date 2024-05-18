@@ -1,9 +1,10 @@
-import CrawlerIndex, {ICrawlerIndex} from "../model/interface/mongoose/CrawlerIndex";
-import CatalogType from "../model/interface/mongoose/CatalogType";
-import CrawlerIndexCategory from "../model/interface/mongoose/CrawlerIndexCategory";
 import {validate} from "class-validator";
 import {Injectable} from "../decorator/Decorator";
 import {InitBasedType} from "../model/catalog/InitBasedType";
+import {CatalogType} from "../schema/CatalogTypeSchema";
+import {CrawlerIndexCategory} from "../schema/CrawlerIndexCategorySchema";
+import {ICrawlerIndex} from "../model/interface/ICrawlerIndex";
+import {CrawlerIndex} from "../schema/CrawlerIndexSchema";
 
 
 @Injectable('catalogService')
@@ -11,7 +12,7 @@ export class CatalogServices {
     async searchService(initBasedType : InitBasedType) {
         await validate(initBasedType).then(errors =>
         {if(errors.length>0) {throw new Error(errors.toString());}});
-        const currentType = await CatalogType.findOne({type: initBasedType.type});
+        const currentType = await CatalogType.findOne({tipe: initBasedType.type});
         if (currentType !== null) {
             const categoryCrawlerCategory = await CrawlerIndexCategory.findOne({name: "catalog"});
             const crawlerIndex = <ICrawlerIndex>{};
@@ -20,8 +21,11 @@ export class CatalogServices {
                 crawlerIndex.category = categoryCrawlerCategory.get("name");
                 crawlerIndex.letterLock = await this.searchLockService();
                 crawlerIndex.result = 0;
-                crawlerIndex.type = currentType.get("_id");
+                crawlerIndex.tipe = currentType.get("_id");
                 await CrawlerIndex.replaceOne({}, crawlerIndex);
+                let testRelation = await CrawlerIndex.findOne().populate("CatalogType");
+                let idType = testRelation?.get("name");
+                console.log(testRelation);
             }
             return crawlerIndex.letterLock;
         }

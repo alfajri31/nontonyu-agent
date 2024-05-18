@@ -1,0 +1,15 @@
+import mongoose, {Schema} from 'mongoose';
+import {ICatalogType} from "../model/interface/ICatalogType";
+
+
+export const CatalogTypeSchema: Schema = new Schema({
+    tipe: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
+},{
+    collection:"catalog_type",
+    strictPopulate:false
+});
+
+
+export const CatalogType = mongoose.model<ICatalogType>('CatalogType', CatalogTypeSchema);

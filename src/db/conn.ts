@@ -3,10 +3,11 @@ import {
     CatalogTypeSeed, CrawlerIndexCategorySeed,
     CrawlerIndexSeed,
 } from "./seed/data";
-import CatalogAnime from "../model/interface/mongoose/CatalogAnime";
-import CatalogType from "../model/interface/mongoose/CatalogType";
-import CrawlerIndex from "../model/interface/mongoose/CrawlerIndex";
-import CrawlerIndexCategory from "../model/interface/mongoose/CrawlerIndexCategory";
+import {CatalogAnime} from "../schema/CatalogAnimeSchema";
+import {CatalogType} from "../schema/CatalogTypeSchema";
+import {CrawlerIndex} from "../schema/CrawlerIndexSchema";
+import {CrawlerIndexCategory} from "../schema/CrawlerIndexCategorySchema";
+
 
 export default (async()=> {
     await mongoose.connect("mongodb://127.0.0.1/nontonyu");
@@ -22,7 +23,7 @@ export default (async()=> {
             if (!data) {
                 CrawlerIndexSeed.forEach(seed => {
                     // @ts-ignore
-                    seed.type = result['0'];
+                    seed.tipe = result['0'];
                 });
                 await CrawlerIndex.insertMany(CrawlerIndexSeed);
             }

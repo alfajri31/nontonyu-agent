@@ -1,6 +1,3 @@
-import {ObjectId} from "mongodb";
-import {ICrawlerIndex} from "../../model/interface/mongoose/CrawlerIndex";
-
 export const CrawlerIndexCategorySeed :
     {
         name: string
@@ -16,7 +13,7 @@ export const CrawlerIndexSeed : {
     completed: boolean;
     letterLock: string;
     category: string;
-    type: ""
+    tipe: ""
 }[] = [
     {
         indexed: false,
@@ -24,7 +21,7 @@ export const CrawlerIndexSeed : {
         category:"catalog",
         completed: false,
         letterLock : "a",
-        type: ""
+        tipe: ""
     }
 ];
 
@@ -32,14 +29,14 @@ export const CrawlerIndexSeed : {
 
 export const CatalogTypeSeed : (
     {
-        type: string
+        tipe: string
     }
     )[] = [
     {
-        type: "Anime"
+        tipe: "Anime"
     },
    {
-       type: "Korea"
+       tipe: "Korea"
     }
 ];
 
