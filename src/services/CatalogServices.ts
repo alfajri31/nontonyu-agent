@@ -5,6 +5,7 @@ import {CatalogType} from "../schema/CatalogTypeSchema";
 import {CrawlerIndexCategory} from "../schema/CrawlerIndexCategorySchema";
 import {ICrawlerIndex} from "../model/interface/ICrawlerIndex";
 import {CrawlerIndex} from "../schema/CrawlerIndexSchema";
+import {model} from "mongoose";
 
 
 @Injectable('catalogService')
@@ -23,8 +24,7 @@ export class CatalogServices {
                 crawlerIndex.result = 0;
                 crawlerIndex.tipe = currentType.get("_id");
                 await CrawlerIndex.replaceOne({}, crawlerIndex);
-                let testRelation = await CrawlerIndex.findOne().populate("CatalogType");
-                let idType = testRelation?.get("name");
+                let testRelation = await CrawlerIndex.find().populate("CatalogType").exec();
                 console.log(testRelation);
             }
             return crawlerIndex.letterLock;
