@@ -5,6 +5,8 @@ import {EnumCatalogTypes} from "../../enum/EnumCatalogTypes";
 import { ParamInitBasedType } from "../../model/global/catalog/ParamInitBasedType";
 import {getHref, getText} from "../../util/CrawlerUtil";
 import {CatalogAnimeTv} from "../../schema/CatalogAnimeSchemaTv";
+import {CatalogAnimeTvSelector} from "../../selector/CatalogAnimeTvSelector";
+import {Inject} from "../../decorator/Decorator";
 
 let browser: any;
 let page: any;
@@ -25,9 +27,11 @@ describe('search anime', () => {
     let catalogService : CatalogServices;
     let initBasedType : ParamInitBasedType;
     let searchInitType: string;
+    let catalogAnimeSelector : CatalogAnimeTvSelector;
     beforeAll(async() => {
         initBasedType = new ParamInitBasedType();
         catalogService = new CatalogServices();
+        catalogAnimeSelector = new CatalogAnimeTvSelector();
     })
     it('Init Based Type', async() => {
         initBasedType.type=EnumCatalogTypes.ANIME;
@@ -46,6 +50,7 @@ describe('search anime', () => {
         const href = await getHref(page,'#topSearchResultList');
         for (const link of href) {
             await page.goto(link);
+            await getText(page,catalogAnimeSelector.type);
         }
     });
 });
