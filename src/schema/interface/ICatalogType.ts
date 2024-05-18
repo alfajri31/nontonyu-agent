@@ -1,6 +1,6 @@
-import mongoose, {Document} from "mongoose";
+import mongoose from "mongoose";
 
-export interface ICatalogType extends Document {
+export interface ICatalogType {
     tipe: string;
     createdAt: Date;
     updatedAt: Date;

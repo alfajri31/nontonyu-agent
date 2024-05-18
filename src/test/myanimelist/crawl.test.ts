@@ -13,7 +13,7 @@ let page: any;
 beforeAll(async() => {
     await conn;
     browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         slowMo:50,
         args: [ '--ignore-certificate-errors','--no-sandbox'],
     })
@@ -51,11 +51,11 @@ describe('search anime', () => {
         const hrefs = [];
         for(let i=0;i<=size-1;i++) {
             const handle = await page.$('#topSearchResultList > div:nth-child('+i+') > div > a');
-            try {
-                hrefs.push(await page.evaluate( (els: { getAttribute: (arg0: string) => any; }) => els.getAttribute('href'), handle));
-            }catch(e){}
+            try {hrefs.push(await page.evaluate((els:{
+                getAttribute: (arg0: string) => any;
+            }) => els.getAttribute('href'), handle));}catch(e){}
+            const paramCatalogAnime = new ParamCatalogAnime();
         }
-        const paramCatalogAnime = new ParamCatalogAnime();
     },50000);
 });
 

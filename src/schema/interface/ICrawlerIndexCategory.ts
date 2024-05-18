@@ -1,6 +1,6 @@
-import {Document} from "mongoose";
 
-export interface ICrawlerIndexCategory extends Document {
+
+export interface ICrawlerIndexCategory {
     name: string;
     createdAt: Date;
     updatedAt: Date;

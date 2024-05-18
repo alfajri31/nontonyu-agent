@@ -1,6 +1,6 @@
-import mongoose, {Document} from "mongoose";
+import mongoose from "mongoose";
 
-export interface ICrawlerIndex extends Document {
+export interface ICrawlerIndex {
     indexed: boolean;
     result : 0;
     category:string;

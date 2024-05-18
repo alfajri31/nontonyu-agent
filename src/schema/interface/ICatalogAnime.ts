@@ -1,6 +1,4 @@
-import {Document} from "mongoose";
-
-export interface ICatalogAnime extends Document {
+export interface ICatalogAnime  {
     title: string;
     aired: string;
     broadcast : string;
