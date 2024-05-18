@@ -2,11 +2,16 @@ import CrawlerIndex, {ICrawlerIndex} from "../model/interface/mongoose/CrawlerIn
 import {SearchParam} from "../model/SearchParam";
 import CatalogType from "../model/interface/mongoose/CatalogType";
 import CrawlerIndexCategory from "../model/interface/mongoose/CrawlerIndexCategory";
-import {required, validate} from "../decorator/Validation";
+import {validate} from "class-validator";
 
 
 export class CatalogServices {
-    async searchService(@required searchParam : SearchParam) {
+    async searchService(searchParam : SearchParam) {
+        await validate(searchParam).then(errors => {
+            if(errors) {
+                throw new Error(errors.toString());
+            }
+        });
         const currentType = await CatalogType.findOne({type: searchParam.tipe});
         if (currentType !== null) {
             const categoryCrawlerCategory = await CrawlerIndexCategory.findOne({name: "catalog"});
