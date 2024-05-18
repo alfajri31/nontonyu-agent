@@ -2,8 +2,10 @@ import puppeteer from "puppeteer";
 import conn from "../../db/conn";;
 import {CatalogServices} from "../../services/CatalogServices";
 import {EnumCatalogTypes} from "../../enum/EnumCatalogTypes";
-import { InitBasedType } from "../../model/global/catalog/InitBasedType";
-import {ISearchParam} from "../../model/global/interface/ISearchParam";
+import { ParamInitBasedType } from "../../model/global/catalog/ParamInitBasedType";
+import {ParamCatalogAnime} from "../../model/myanimelist/catalog/ParamCatalogAnime";
+
+;
 
 let browser: any;
 let page: any;
@@ -11,43 +13,49 @@ let page: any;
 beforeAll(async() => {
     await conn;
     browser = await puppeteer.launch({
-        headless: true,
-        slowMo:30,
+        headless: false,
+        slowMo:50,
         args: [ '--ignore-certificate-errors','--no-sandbox'],
     })
 });
 afterAll(async () => {
     await browser.close()
+    try{process.exit()}catch (e) {}
 });
 describe('search anime', () => {
     let catalogService : CatalogServices;
-    let initBasedType : InitBasedType;
+    let initBasedType : ParamInitBasedType;
+    let searchInitType: string;
     beforeAll(async() => {
-        initBasedType = new InitBasedType();
+        initBasedType = new ParamInitBasedType();
         catalogService = new CatalogServices();
     })
-    it('Open Myanimelist', async() => {
+    it('Init Based Type', async() => {
+        initBasedType.type=EnumCatalogTypes.ANIME;
+        searchInitType = await catalogService.searchService(initBasedType);
+    },50000);
+    it('Open gate MyAnimeList', async() => {
         page = await browser.newPage();
         await page.goto("https://myanimelist.net");
     },50000);
-    it('Click search anime searchbar', async() => {
+    it('How many anime that appear in list', async() => {
         await page.click('#topSearchText');
-    },50000);
-    it('Type anime that you want', async() => {
-        initBasedType.type=EnumCatalogTypes.ANIME;
-        const searchTitle = await catalogService.searchService(initBasedType);
-        await page.type('#topSearchText',searchTitle);
-        await page.click('#myanimelist > div.wrapper > div.top_signup.ga-impression');
-        await page.type('#topSearchText',searchTitle);
-    },50000);
-    it('How many anime that appear', async() => {
-        const parent = await page.$$eval(
-            "#topSearchResultList",
-            (els: any[]) => els.map(e => e.children)
+        await page.type('#topSearchText',searchInitType);
+        await new Promise(r => setTimeout(r, 2000));
+        await page.type('#topSearchText'," ");
+        await new Promise(r => setTimeout(r, 2000));
+        const parent = await page.$$eval("#topSearchResultList",
+            (els: any[]) => els.map((e,index) => e.children)
         );
         let size = Object.keys(parent[0]).length;
-        const searchParam = <ISearchParam>{};
-        const searchTitle = await catalogService.isCompleted();
+        const hrefs = [];
+        for(let i=0;i<=size-1;i++) {
+            const handle = await page.$('#topSearchResultList > div:nth-child('+i+') > div > a');
+            try {
+                hrefs.push(await page.evaluate( (els: { getAttribute: (arg0: string) => any; }) => els.getAttribute('href'), handle));
+            }catch(e){}
+        }
+        const paramCatalogAnime = new ParamCatalogAnime();
     },50000);
 });
 

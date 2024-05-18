@@ -1,5 +1,5 @@
 import mongoose, {Schema} from 'mongoose';
-import {ICatalogAnime} from "../model/myanimelist/interface/ICatalogAnime";
+import {ICatalogAnime} from "./interface/ICatalogAnime";
 
 
 export const CatalogAnimeSchema: Schema<ICatalogAnime> = new Schema({
