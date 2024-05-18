@@ -1,14 +1,14 @@
-import {ISearchParam} from "../model/interface/ISearchParam";
+import CrawlerIndex, {ICrawlerIndex} from "../model/interface/mongoose/CrawlerIndex";
+import {SearchParam} from "../model/SearchParam";
 import CatalogType from "../model/interface/mongoose/CatalogType";
 import CrawlerIndexCategory from "../model/interface/mongoose/CrawlerIndexCategory";
-import CrawlerIndex, {ICrawlerIndex} from "../model/interface/mongoose/CrawlerIndex";
+import {required, validate} from "../decorator/Validation";
 
 
 export class CatalogServices {
-
-    async searchService(searchParam: ISearchParam) {
-        const currentType = await CatalogType.findOne({type:searchParam.type});
-        if(currentType!==null) {
+    async searchService(@required searchParam : SearchParam) {
+        const currentType = await CatalogType.findOne({type: searchParam.tipe});
+        if (currentType !== null) {
             const categoryCrawlerCategory = await CrawlerIndexCategory.findOne({name: "catalog"});
             const crawlerIndex = <ICrawlerIndex>{};
             if (categoryCrawlerCategory) {
@@ -17,13 +17,13 @@ export class CatalogServices {
                 crawlerIndex.letterLock = await this.searchLockService();
                 crawlerIndex.result = 0;
                 crawlerIndex.type = currentType.get("_id");
-                await CrawlerIndex.replaceOne({},crawlerIndex);
+                await CrawlerIndex.replaceOne({}, crawlerIndex);
             }
             const posts = await CrawlerIndex.findOne();
             const idType = posts?.get("type")._id;
             return crawlerIndex.letterLock;
         }
-        return "";
+        return true;
     }
 
     async searchLockService() {
@@ -51,7 +51,7 @@ export class CatalogServices {
 
     }
 
-    async isCompleted(searchParam: ISearchParam) {
+    async isCompleted(searchParam: SearchParam) {
         /**
          * Algorithm
          * Jika size list adalah 5 maka
