@@ -13,8 +13,7 @@ export const CrawlerIndexSchema: Schema<ICrawlerIndex> = new Schema({
     tipe: { type: mongoose.Schema.Types.ObjectId,ref:"CatalogType"},
     completed: {type:Boolean,default:false}
 },{
-    collection:"crawler_index",
-    strictPopulate:false
+    collection:"crawler_index"
 });
 
 export const CrawlerIndex = mongoose.model('CrawlerIndex', CrawlerIndexSchema);

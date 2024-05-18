@@ -24,7 +24,7 @@ export class CatalogServices {
                 crawlerIndex.result = 0;
                 crawlerIndex.tipe = currentType.get("_id");
                 await CrawlerIndex.replaceOne({}, crawlerIndex);
-                let testRelation = await CrawlerIndex.find().populate("CatalogType").exec();
+                let testRelation = await CatalogType.findOne().populate("crawlerIndexes");
                 console.log(testRelation);
             }
             return crawlerIndex.letterLock;
