@@ -10,4 +10,11 @@ export const CatalogTypeSchema: Schema<ICatalogType> = new Schema({
     collection:"catalog_type"
 });
 
+CatalogTypeSchema.virtual("crawlerIndexes", {
+    ref: "CrawlerIndex",
+    localField: '_id',
+    foreignField: 'tipe'
+})
+
+
 export const CatalogType = mongoose.model('CatalogType', CatalogTypeSchema);

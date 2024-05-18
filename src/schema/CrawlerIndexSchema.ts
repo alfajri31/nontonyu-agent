@@ -1,5 +1,6 @@
 import mongoose, {Schema} from 'mongoose';
 import {ICrawlerIndex} from "../model/interface/ICrawlerIndex";
+import {CatalogType, CatalogTypeSchema} from "./CatalogTypeSchema";
 
 
 export const CrawlerIndexSchema: Schema<ICrawlerIndex> = new Schema({
@@ -10,7 +11,10 @@ export const CrawlerIndexSchema: Schema<ICrawlerIndex> = new Schema({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     rangeCap: {type:Number,default:2},
-    tipe: { type: mongoose.Schema.Types.ObjectId,ref:"CatalogType"},
+    tipe: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"CatalogType"
+    },
     completed: {type:Boolean,default:false}
 },{
     collection:"crawler_index"
