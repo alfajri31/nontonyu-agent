@@ -1,8 +1,5 @@
 import mongoose from "mongoose";
-import {
-    CatalogTypeSeed, CrawlerIndexCategorySeed,
-    CrawlerIndexSeed,
-} from "./seed/data";
+import {CatalogTypeSeed, CrawlerIndexCategorySeed, CrawlerIndexSeed,} from "./seed/data";
 import {CatalogAnime} from "../schema/CatalogAnimeSchema";
 import {CatalogType} from "../schema/CatalogTypeSchema";
 import {CrawlerIndex} from "../schema/CrawlerIndexSchema";

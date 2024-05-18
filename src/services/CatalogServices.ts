@@ -1,11 +1,11 @@
 import {validate} from "class-validator";
-import {InitBasedType} from "../model/catalog/InitBasedType";
 import {CatalogType} from "../schema/CatalogTypeSchema";
 import {CrawlerIndexCategory} from "../schema/CrawlerIndexCategorySchema";
-import {ICrawlerIndex} from "../model/interface/ICrawlerIndex";
+import {EnumCategoryCrawl} from "../enum/EnumCategoryCrawl";
+import {InitBasedType} from "../model/global/catalog/InitBasedType";
+import {ICrawlerIndex} from "../model/global/interface/ICrawlerIndex";
 import {CrawlerIndex} from "../schema/CrawlerIndexSchema";
-import {EnumCatalogTypesCollection} from "../enum/EnumCatalogTypes";
-import {EnumCategoryCrawl, EnumCategoryCrawlCollection} from "../enum/EnumCategoryCrawl";
+import {ObjectId} from "mongodb";
 
 export class CatalogServices {
     async searchService(initBasedType : InitBasedType) {
@@ -17,10 +17,10 @@ export class CatalogServices {
             const crawlerIndex = <ICrawlerIndex>{};
             if (categoryCrawlerCategory) {
                 crawlerIndex.indexed = true;
-                crawlerIndex.category = categoryCrawlerCategory.get("name");
+                crawlerIndex.category = String(categoryCrawlerCategory?.get("name"));
                 crawlerIndex.letterLock = await this.searchLockService();
                 crawlerIndex.result = 0;
-                crawlerIndex.tipe = currentType.get("_id");
+                crawlerIndex.tipe = Object(currentType.get("_id"));
                 await CrawlerIndex.replaceOne({}, crawlerIndex);
             }
             return crawlerIndex.letterLock;
@@ -53,11 +53,11 @@ export class CatalogServices {
 
     }
 
-    async isCompleted(searchParam: InitBasedType) {
+    async isCompleted() {
         /**
          * Algorithm
          * Jika size list adalah 5 maka
-         * Masukan data list anmime sebanyak 5 dengan go_into_page kemudian elemen yang relevan
+         * Masukan data list anime sebanyak 5 dengan go_into_page kemudian cek elemen yang relevan lagi
          */
         return false;
     }

@@ -1,4 +1,4 @@
-import {Document, Expression, Schema} from "mongoose";
+import {Document} from "mongoose";
 
 export interface ICatalogAnime extends Document {
     title: string;

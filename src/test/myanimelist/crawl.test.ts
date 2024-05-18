@@ -1,8 +1,9 @@
 import puppeteer from "puppeteer";
-import conn from "../../db/conn";
-import {ISearchParam} from "../../model/interface/ISearchParam";
+import conn from "../../db/conn";;
 import {CatalogServices} from "../../services/CatalogServices";
-import {InitBasedType} from "../../model/catalog/InitBasedType";
+import {EnumCatalogTypes} from "../../enum/EnumCatalogTypes";
+import { InitBasedType } from "../../model/global/catalog/InitBasedType";
+import {ISearchParam} from "../../model/global/interface/ISearchParam";
 
 let browser: any;
 let page: any;
@@ -33,7 +34,7 @@ describe('search anime', () => {
         await page.click('#topSearchText');
     },50000);
     it('Type anime that you want', async() => {
-        initBasedType.type="Anime";
+        initBasedType.type=EnumCatalogTypes.ANIME;
         const searchTitle = await catalogService.searchService(initBasedType);
         await page.type('#topSearchText',searchTitle);
         await page.click('#myanimelist > div.wrapper > div.top_signup.ga-impression');
@@ -46,7 +47,7 @@ describe('search anime', () => {
         );
         let size = Object.keys(parent[0]).length;
         const searchParam = <ISearchParam>{};
-        // const searchTitle = await isCompleted(searchParam);
+        const searchTitle = await catalogService.isCompleted();
     },50000);
 });
 

@@ -1,6 +1,5 @@
 import mongoose, {Schema} from 'mongoose';
-import {ICrawlerIndexCategory} from "../model/interface/ICrawlerIndexCategory";
-import {ICrawlerIndex} from "../model/interface/ICrawlerIndex";
+import {ICrawlerIndexCategory} from "../model/global/interface/ICrawlerIndexCategory";
 
 
 export const CrawlerIndexCategorySchema: Schema<ICrawlerIndexCategory> = new Schema({
