@@ -4,6 +4,8 @@ import {CatalogType} from "../schema/CatalogTypeSchema";
 import {CrawlerIndexCategory} from "../schema/CrawlerIndexCategorySchema";
 import {ICrawlerIndex} from "../model/interface/ICrawlerIndex";
 import {CrawlerIndex} from "../schema/CrawlerIndexSchema";
+import {EnumCatalogTypesCollection} from "../enum/EnumCatalogTypes";
+import {EnumCategoryCrawl, EnumCategoryCrawlCollection} from "../enum/EnumCategoryCrawl";
 
 export class CatalogServices {
     async searchService(initBasedType : InitBasedType) {
@@ -11,7 +13,7 @@ export class CatalogServices {
         {if(errors.length>0) {throw new Error(errors.toString());}});
         const currentType = await CatalogType.findOne({tipe: initBasedType.type});
         if (currentType !== null) {
-            const categoryCrawlerCategory = await CrawlerIndexCategory.findOne({name: "catalog"});
+            const categoryCrawlerCategory = await CrawlerIndexCategory.findOne({name: EnumCategoryCrawl.CATALOG});
             const crawlerIndex = <ICrawlerIndex>{};
             if (categoryCrawlerCategory) {
                 crawlerIndex.indexed = true;

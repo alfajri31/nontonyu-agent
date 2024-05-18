@@ -1,8 +1,8 @@
 import {IsEnum, IsNotEmpty} from "class-validator";
-import {CatalogTypeEnum} from "../../enum/CatalogTypeEnum";
+import {EnumCatalogTypesCollection} from "../../enum/EnumCatalogTypes";
 export class InitBasedType {
     @IsNotEmpty()
-    @IsEnum(CatalogTypeEnum)
+    @IsEnum(EnumCatalogTypesCollection)
     type:string;
 }
 

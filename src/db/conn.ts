@@ -23,7 +23,7 @@ export default (async()=> {
             if (!data) {
                 CrawlerIndexSeed.forEach(seed => {
                     // @ts-ignore
-                    seed.tipe = result['0'];
+                    seed.tipe = result['insertedIds'][0];
                 });
                 await CrawlerIndex.insertMany(CrawlerIndexSeed);
             }
