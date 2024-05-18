@@ -1,8 +1,8 @@
 import mongoose, {Schema} from 'mongoose';
-import {ICatalogAnime} from "./interface/ICatalogAnime";
+import {ICatalogAnimeTv} from "./interface/ICatalogAnimeTv";
 
 
-export const CatalogAnimeSchema: Schema<ICatalogAnime> = new Schema({
+export const CatalogAnimeSchemaTv: Schema<ICatalogAnimeTv> = new Schema({
     synopsis: {type: String,required:true},
     title: { type: String, required: true },
     aired: {type:String,required:true},
@@ -21,6 +21,6 @@ export const CatalogAnimeSchema: Schema<ICatalogAnime> = new Schema({
     score : { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
-},{collection:"catalog_anime"});
+},{collection:"catalog_anime_tv"});
 
-export const CatalogAnime = mongoose.model('CatalogAnime', CatalogAnimeSchema);
+export const CatalogAnimeTv = mongoose.model('CatalogAnimeTv', CatalogAnimeSchemaTv);

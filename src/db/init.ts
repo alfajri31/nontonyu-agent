@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
-import {CatalogAnime} from "../schema/CatalogAnimeSchema";
 import {SysCatalogType} from "../schema/SysCatalogTypeSchema";
 import {SysCrawlerIndex} from "../schema/SysCrawlerIndexSchema";
 import {SysCrawlerIndexCategory} from "../schema/SysCrawlerIndexCategorySchema";
 import {SysCatalogTypeSeed, SysCrawlerIndexCategorySeed, SysCrawlerIndexSeed} from "./seed/data";
+import {CatalogAnimeTv} from "../schema/CatalogAnimeSchemaTv";
 
 export default (async()=> {
     await mongoose.connect("mongodb://127.0.0.1/nontonyu");
-    await CatalogAnime.createCollection();
+    await CatalogAnimeTv.createCollection();
     await SysCatalogType.createCollection().then(async (r) => {
         const data = await r.findOne();
         if (!data) {

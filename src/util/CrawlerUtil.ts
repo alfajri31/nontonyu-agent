@@ -1,5 +1,5 @@
 import {Page} from "puppeteer";
-import {ParamCatalogAnime} from "../model/myanimelist/catalog/ParamCatalogAnime";
+import {ParamCatalogAnimeTv} from "../model/myanimelist/catalog/ParamCatalogAnimeTv";
 
 export async function getHref(page : Page,selector:string):Promise<string[]> {
     const parent = await page.$$eval("#topSearchResultList",

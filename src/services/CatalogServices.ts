@@ -1,7 +1,7 @@
 import {EnumCategoryCrawl} from "../enum/EnumCategoryCrawl";
 import {ParamInitBasedType} from "../model/global/catalog/ParamInitBasedType";
 import {ICrawlerIndex} from "../schema/interface/ICrawlerIndex";
-import {ParamCatalogAnime} from "../model/myanimelist/catalog/ParamCatalogAnime";
+import {ParamCatalogAnimeTv} from "../model/myanimelist/catalog/ParamCatalogAnimeTv";
 import {validation} from "../util/ValidationUtil";
 import {SysCrawlerIndex} from "../schema/SysCrawlerIndexSchema";
 import {SysCrawlerIndexCategory} from "../schema/SysCrawlerIndexCategorySchema";
@@ -52,7 +52,7 @@ export class CatalogServices {
 
     }
 
-    async crawlCatalog(paramCatalogAnime: ParamCatalogAnime):Promise<boolean> {
+    async crawlCatalog(paramCatalogAnime: ParamCatalogAnimeTv):Promise<boolean> {
         /**
          * Algorithm
          * Jika size list adalah 5 maka

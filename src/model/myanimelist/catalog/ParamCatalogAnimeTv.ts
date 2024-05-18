@@ -1,7 +1,7 @@
-import {ICatalogAnime} from "../../../schema/interface/ICatalogAnime";
+import {ICatalogAnimeTv} from "../../../schema/interface/ICatalogAnimeTv";
 import {IsNotEmpty} from "class-validator";
 
-export class ParamCatalogAnime implements ICatalogAnime{
+export class ParamCatalogAnimeTv implements ICatalogAnimeTv{
     @IsNotEmpty()
     synopsis: string;
     @IsNotEmpty()

@@ -1,4 +1,4 @@
-export interface ICatalogAnime  {
+export interface ICatalogAnimeTv {
     type: string;
     title: string;
     synopsis : string;
