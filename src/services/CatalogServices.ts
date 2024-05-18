@@ -1,11 +1,9 @@
 import {validate} from "class-validator";
-import {Injectable} from "../decorator/Decorator";
 import {InitBasedType} from "../model/catalog/InitBasedType";
 import {CatalogType} from "../schema/CatalogTypeSchema";
 import {CrawlerIndexCategory} from "../schema/CrawlerIndexCategorySchema";
 import {ICrawlerIndex} from "../model/interface/ICrawlerIndex";
 import {CrawlerIndex} from "../schema/CrawlerIndexSchema";
-
 
 export class CatalogServices {
     async searchService(initBasedType : InitBasedType) {
