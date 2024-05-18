@@ -1,10 +1,12 @@
 import CrawlerIndex, {ICrawlerIndex} from "../model/interface/mongoose/CrawlerIndex";
-import {SearchParam} from "../model/SearchParam";
 import CatalogType from "../model/interface/mongoose/CatalogType";
 import CrawlerIndexCategory from "../model/interface/mongoose/CrawlerIndexCategory";
 import {validate} from "class-validator";
+import {SearchParam} from "../model/catalog/SearchParam";
+import {Inject, Injectable} from "../decorator/Decorator";
 
 
+@Injectable('catalogService')
 export class CatalogServices {
     async searchService(searchParam : SearchParam) {
         await validate(searchParam)
