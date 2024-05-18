@@ -2,16 +2,16 @@ import CrawlerIndex, {ICrawlerIndex} from "../model/interface/mongoose/CrawlerIn
 import CatalogType from "../model/interface/mongoose/CatalogType";
 import CrawlerIndexCategory from "../model/interface/mongoose/CrawlerIndexCategory";
 import {validate} from "class-validator";
-import {SearchParam} from "../model/catalog/SearchParam";
-import {Inject, Injectable} from "../decorator/Decorator";
+import {Injectable} from "../decorator/Decorator";
+import {InitBasedType} from "../model/catalog/InitBasedType";
 
 
 @Injectable('catalogService')
 export class CatalogServices {
-    async searchService(searchParam : SearchParam) {
-        await validate(searchParam)
-            .then(errors => {if(errors) {throw new Error(errors.toString());}});
-        const currentType = await CatalogType.findOne({type: searchParam.tipe});
+    async searchService(initBasedType : InitBasedType) {
+        await validate(initBasedType).then(errors =>
+        {if(errors.length>0) {throw new Error(errors.toString());}});
+        const currentType = await CatalogType.findOne({type: initBasedType.type});
         if (currentType !== null) {
             const categoryCrawlerCategory = await CrawlerIndexCategory.findOne({name: "catalog"});
             const crawlerIndex = <ICrawlerIndex>{};
@@ -53,7 +53,7 @@ export class CatalogServices {
 
     }
 
-    async isCompleted(searchParam: SearchParam) {
+    async isCompleted(searchParam: InitBasedType) {
         /**
          * Algorithm
          * Jika size list adalah 5 maka
