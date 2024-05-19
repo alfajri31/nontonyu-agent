@@ -70,15 +70,15 @@ export class CatalogServices {
                 return console.error(err);
             }
         });
-        for (const data of objects) {
-            // @ts-ignore
-            let letterLock = data["letterLock"]
-            await model.deleteOne({
-                letterLock : letterLock
-            })
-        }
         return fullProp.length > 0 ?
             (async function () {
+                for (const data of objects) {
+                    // @ts-ignore
+                    let letterLock = data["letterLock"]
+                    await model.deleteOne({
+                        letterLock : letterLock
+                    })
+                }
                 await model.create(fullProp)
                 await session.commitTransaction();
             }())
