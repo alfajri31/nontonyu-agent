@@ -4,12 +4,12 @@ import {CatalogServices} from "../../services/CatalogServices";
 import {EnumCatalogTypes} from "../../enum/EnumCatalogTypes";
 import { DTOInitBasedType } from "../../model/global/catalog/DTOInitBasedType";
 import {getHref, getInnerText} from "../../util/CrawlerUtil";
-import {DTOCatalogAnimeTv} from "../../model/myanimelist/catalog/DTOCatalogAnimeTv";
 import {SelectorCatalogAnimeTv} from "../../selector/SelectorCatalogAnimeTv";
-import {CatalogAnimeTv} from "../../schema/CatalogAnimeSchemaTv";
+import {CatalogAnimeTv} from "../../schema/CatalogAnimeSchema";
 import {EnumCategoryCrawl} from "../../enum/EnumCategoryCrawl";
 import {SysCatalogType} from "../../schema/SysCatalogTypeSchema";
 import {SysCrawlerIndexCategory} from "../../schema/SysCrawlerIndexCategorySchema";
+import {DTOCatalogAnime} from "../../model/myanimelist/catalog/DTOCatalogAnime";
 
 let browser: any;
 export let page: any;
@@ -46,38 +46,38 @@ describe('search anime',  () => {
         await page.type('#topSearchText'," ");
         await new Promise(r => setTimeout(r, 2000));
         const hrefs = await getHref('#topSearchResultList');
-        let dtoCatalogAnimeTvList : DTOCatalogAnimeTv[]=[];
+        let dtoCatalogAnimeList : DTOCatalogAnime[]=[];
         // let href="https://myanimelist.net/manga/3721/AAA?q=aa%20&cat=manga";
         for (const href of hrefs) {
             await page.goto(href);
-            const dtoCatalogAnimeTv = new DTOCatalogAnimeTv();
-            dtoCatalogAnimeTv.title = await getInnerText(selectorCatalogAnimeTv.title);
-            dtoCatalogAnimeTv.type = await getInnerText(selectorCatalogAnimeTv.type);
-            dtoCatalogAnimeTv.studios = await getInnerText(selectorCatalogAnimeTv.studios);
-            dtoCatalogAnimeTv.aired = await getInnerText(selectorCatalogAnimeTv.aired);
-            dtoCatalogAnimeTv.broadcast = await getInnerText(selectorCatalogAnimeTv.broadcast);
-            dtoCatalogAnimeTv.duration = await getInnerText(selectorCatalogAnimeTv.duration);
-            dtoCatalogAnimeTv.episodes = await getInnerText(selectorCatalogAnimeTv.episodes);
-            dtoCatalogAnimeTv.genres = await getInnerText(selectorCatalogAnimeTv.genres,"genres");
-            dtoCatalogAnimeTv.licensors= await getInnerText(selectorCatalogAnimeTv.licensors);
-            dtoCatalogAnimeTv.premired = await getInnerText(selectorCatalogAnimeTv.premired);
-            dtoCatalogAnimeTv.producers = await getInnerText(selectorCatalogAnimeTv.producers);
-            dtoCatalogAnimeTv.synopsis = await getInnerText(selectorCatalogAnimeTv.synopsis);
-            dtoCatalogAnimeTv.themes = await getInnerText(selectorCatalogAnimeTv.themes);
-            dtoCatalogAnimeTv.score = await getInnerText(selectorCatalogAnimeTv.score);
-            dtoCatalogAnimeTv.urlCatalog = href;
+            const dtoCatalogAnime = new DTOCatalogAnime();
+            dtoCatalogAnime.title = await getInnerText(selectorCatalogAnimeTv.title);
+            dtoCatalogAnime.type = await getInnerText(selectorCatalogAnimeTv.type);
+            dtoCatalogAnime.studios = await getInnerText(selectorCatalogAnimeTv.studios);
+            dtoCatalogAnime.aired = await getInnerText(selectorCatalogAnimeTv.aired);
+            dtoCatalogAnime.broadcast = await getInnerText(selectorCatalogAnimeTv.broadcast);
+            dtoCatalogAnime.duration = await getInnerText(selectorCatalogAnimeTv.duration);
+            dtoCatalogAnime.episodes = await getInnerText(selectorCatalogAnimeTv.episodes);
+            dtoCatalogAnime.genres = await getInnerText(selectorCatalogAnimeTv.genres,"genres");
+            dtoCatalogAnime.licensors= await getInnerText(selectorCatalogAnimeTv.licensors);
+            dtoCatalogAnime.premired = await getInnerText(selectorCatalogAnimeTv.premired);
+            dtoCatalogAnime.producers = await getInnerText(selectorCatalogAnimeTv.producers);
+            dtoCatalogAnime.synopsis = await getInnerText(selectorCatalogAnimeTv.synopsis);
+            dtoCatalogAnime.themes = await getInnerText(selectorCatalogAnimeTv.themes);
+            dtoCatalogAnime.score = await getInnerText(selectorCatalogAnimeTv.score);
+            dtoCatalogAnime.urlCatalog = href;
             const sysCategoryType = await SysCatalogType.findOne({
                 tipe : EnumCatalogTypes.ANIME
             })
-            sysCategoryType? dtoCatalogAnimeTv.sysCatalogType = sysCategoryType.get("_id") :"";
+            sysCategoryType? dtoCatalogAnime.sysCatalogType = sysCategoryType.get("_id") :"";
             const sysCrawlerIndexCategory = await SysCrawlerIndexCategory.findOne({
                 name : EnumCategoryCrawl.CATALOG
             })
-            sysCrawlerIndexCategory? dtoCatalogAnimeTv.sysCrawlerIndexCategory=sysCrawlerIndexCategory.get("_id") :"";
-            dtoCatalogAnimeTv.letterLock = letterLock;
-            dtoCatalogAnimeTvList.push(dtoCatalogAnimeTv);
+            sysCrawlerIndexCategory? dtoCatalogAnime.sysCrawlerIndexCategory=sysCrawlerIndexCategory.get("_id") :"";
+            dtoCatalogAnime.letterLock = letterLock;
+            dtoCatalogAnimeList.push(dtoCatalogAnime);
         }
-        await catalogService.createCrawl(dtoCatalogAnimeTvList,CatalogAnimeTv)
+        await catalogService.createCrawl(dtoCatalogAnimeList,CatalogAnimeTv)
     });
 });
 

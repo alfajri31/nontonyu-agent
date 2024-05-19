@@ -1,8 +1,8 @@
-import {ICatalogAnimeTv} from "../../../schema/interface/ICatalogAnimeTv";
+import {ICatalogAnime} from "../../../schema/interface/ICatalogAnime";
 import {IsNotEmpty} from "class-validator";
 import {ObjectId} from "mongodb";
 
-export class DTOCatalogAnimeTv implements ICatalogAnimeTv{
+export class DTOCatalogAnime implements ICatalogAnime{
     @IsNotEmpty()
     synopsis: string;
     @IsNotEmpty()

@@ -1,7 +1,7 @@
-import {ICatalogAnimeTv} from "../schema/interface/ICatalogAnimeTv";
+import {ICatalogAnime} from "../schema/interface/ICatalogAnime";
 import {ObjectId} from "mongodb";
 
-export class SelectorCatalogAnimeTv implements ICatalogAnimeTv{
+export class SelectorCatalogAnimeTv implements ICatalogAnime{
 
     letterLock: string;
     aired: string = "#content > table > tbody > tr > td.borderClass > div > div:nth-child(18)";

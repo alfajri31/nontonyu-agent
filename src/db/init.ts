@@ -3,7 +3,7 @@ import {SysCatalogType} from "../schema/SysCatalogTypeSchema";
 import {SysCrawlerIndex} from "../schema/SysCrawlerIndexSchema";
 import {SysCrawlerIndexCategory} from "../schema/SysCrawlerIndexCategorySchema";
 import {SysCatalogTypeSeed, SysCrawlerIndexCategorySeed, SysCrawlerIndexSeed} from "./seed/data";
-import {CatalogAnimeTv} from "../schema/CatalogAnimeSchemaTv";
+import {CatalogAnimeTv} from "../schema/CatalogAnimeSchema";
 
 export default (async()=> {
     await mongoose.connect("mongodb://127.0.0.1/nontonyu");

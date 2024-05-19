@@ -1,6 +1,6 @@
 import {ObjectId} from "mongodb";
 
-export interface ICatalogAnimeTv {
+export interface ICatalogAnime {
     type: string;
     title: string;
     synopsis : string;
