@@ -59,6 +59,7 @@ export class CatalogServices {
             }
         });
         return fullProp.length > 0 ? await model.create(fullProp)
-            : (function(){throw "ERROR: A single object on every prop should have value"}());
+            : (function(){throw "ERROR: Partial object on every prop must have value," +
+            "please adjust the selector and see the output object"}());
     }
 }
