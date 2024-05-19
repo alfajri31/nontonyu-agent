@@ -53,8 +53,6 @@ export class CatalogServices {
     }
 
     async createCrawl(objects: Object[],model:Model<any>): Promise<any> {
-        const session = await mongoose.startSession()
-        session.startTransaction()
         const fullProp = objects.filter(object => {
             const tmp :string[]=[];
             for (const key in object) {
@@ -80,11 +78,8 @@ export class CatalogServices {
                     })
                 }
                 await model.create(fullProp)
-                await session.commitTransaction();
             }())
             : (async function () {
-                await session.abortTransaction();
-                await session.endSession();
                 throw "ERROR: An object on every property must have a value," +
                 "please adjust the selector and see the output object"
             }());
