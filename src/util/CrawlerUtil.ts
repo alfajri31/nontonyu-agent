@@ -1,13 +1,13 @@
 import {page} from "../test/myanimelist/crawl.test";
-import {split} from "lodash";
+
 export async function getHref(selector:string):Promise<string[]> {
-    const list = await page.$$eval("#topSearchResultList",
+    const list = await page.$$eval(selector,
         (els: any[]) => els.map((e,index) => e.children)
     );
     let size = Object.keys(list[0]).length;
     const hrefs: string[] | PromiseLike<string[]> = [];
     for(let i=0;i<=size-1;i++) {
-        const handle = await page.$('#topSearchResultList > div:nth-child('+i+') a');
+        const handle = await page.$(selector+' > div:nth-child('+i+') a');
         try {
             // @ts-ignore
             hrefs.push(await page.evaluate((els:{
@@ -16,18 +16,21 @@ export async function getHref(selector:string):Promise<string[]> {
     }
     return hrefs;
 }
-export async function getText(selector:string) :Promise<string>{
+export async function getInnerText(selector:string,contain?:string|undefined) :Promise<string>{
     let text : string;
     let textArray :string[]=[];
-    try{
-        const selectors = selector.split(",")
-        for (const selector of selectors) {
+    const selectors = selector.split(",")
+    for (const selector of selectors) {
+        try{
             const element = await page.$(selector);
             // @ts-ignore
             text = await page.evaluate((el: { innerText: any; }) => el.innerText, element)
             textArray.push(text);
-        }
-    }catch (e){}
+        }catch (e){}
+    }
+    if(contain) {
+        textArray.filter((data => data.match("/"+contain+"/")));
+    }
     // @ts-ignore
     return textArray.toString()
 }

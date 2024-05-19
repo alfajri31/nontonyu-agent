@@ -20,6 +20,7 @@ export const CatalogAnimeSchemaTv: Schema<ICatalogAnimeTv> = new Schema({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     letterLock: { type: String, required: true },
+    urlCatalog:{type:String,required:true},
     sysCatalogType : {
         type: mongoose.Schema.Types.ObjectId,
         ref: "SysCatalogType",

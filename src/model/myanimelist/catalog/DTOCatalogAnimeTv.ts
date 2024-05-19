@@ -41,4 +41,6 @@ export class DTOCatalogAnimeTv implements ICatalogAnimeTv{
     sysCatalogType: ObjectId;
     @IsNotEmpty()
     sysCrawlerIndexCategory: ObjectId;
+    @IsNotEmpty()
+    urlCatalog:string;
 }

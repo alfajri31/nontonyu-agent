@@ -20,4 +20,5 @@ export interface ICatalogAnimeTv {
     letterLock :string;
     sysCrawlerIndexCategory: ObjectId;
     sysCatalogType: ObjectId;
+    urlCatalog:string;
 }

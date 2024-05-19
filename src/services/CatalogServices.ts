@@ -59,7 +59,7 @@ export class CatalogServices {
                 // @ts-ignore
                 tmp.push(object[key])
             }
-            return tmp.every(el => el!='');
+            return tmp.every(el => el!=''||null||undefined);
         });
         let jsonString = JSON.stringify(objects);
         let jsonPretty = JSON.stringify(JSON.parse(jsonString),null,2);
@@ -80,7 +80,7 @@ export class CatalogServices {
                 await model.create(fullProp)
             }())
             : (function(){
-                throw "ERROR: Partial object on every prop must have value," +
+                throw "ERROR: An object on every prop must have value," +
             "please adjust the selector and see the output object"
             }());
     }
