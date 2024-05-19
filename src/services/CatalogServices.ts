@@ -5,7 +5,7 @@ import {validation} from "../util/ValidationUtil";
 import {SysCrawlerIndex} from "../schema/SysCrawlerIndexSchema";
 import {SysCrawlerIndexCategory} from "../schema/SysCrawlerIndexCategorySchema";
 import {SysCatalogType} from "../schema/SysCatalogTypeSchema";
-import {Model} from "mongoose";
+import mongoose, {Model} from "mongoose";
 import * as fs from "fs";
 
 export class CatalogServices {
@@ -17,7 +17,7 @@ export class CatalogServices {
             const crawlerIndex = <ICrawlerIndex>{};
             if (categoryCrawlerCategory) {
                 crawlerIndex.indexed = true;
-                crawlerIndex.category = String(categoryCrawlerCategory?.get("name"));
+                crawlerIndex.sysCrawlerIndexCategory = categoryCrawlerCategory?.get("_id");
                 crawlerIndex.letterLock = String(await this.searchLockService());
                 crawlerIndex.result = 0;
                 crawlerIndex.sysCatalogType = Object(currentType.get("_id"));
@@ -53,6 +53,8 @@ export class CatalogServices {
     }
 
     async createCrawl(objects: Object[],model:Model<any>): Promise<any> {
+        const session = await mongoose.startSession()
+        session.startTransaction()
         const fullProp = objects.filter(object => {
             const tmp :string[]=[];
             for (const key in object) {
@@ -78,10 +80,13 @@ export class CatalogServices {
         return fullProp.length > 0 ?
             (async function () {
                 await model.create(fullProp)
+                await session.commitTransaction();
             }())
-            : (function(){
+            : (async function () {
+                await session.abortTransaction();
+                await session.endSession();
                 throw "ERROR: An object on every property must have a value," +
-            "please adjust the selector and see the output object"
+                "please adjust the selector and see the output object"
             }());
     }
 }

@@ -36,3 +36,23 @@ export async function getInnerText(selector:string,contain?:string|undefined) :P
     return textArray.toString()
 }
 
+export async function getSrc(selector:string,contain?:string|undefined) :Promise<string>{
+    let text : string;
+    let textArray :string[]=[];
+    const selectors = selector.split(",")
+    for (const selector of selectors) {
+        try{
+            const element = await page.$(selector);
+            // @ts-ignore
+            text = await page.evaluate((el: { src: any; }) => el.src, element)
+            textArray.push(text);
+        }catch (e){}
+    }
+    if(contain) {
+        const regexExp = new RegExp(contain,'i');
+        textArray = textArray.filter((data => data.match(regexExp)));
+    }
+    // @ts-ignore
+    return textArray.toString()
+}
+

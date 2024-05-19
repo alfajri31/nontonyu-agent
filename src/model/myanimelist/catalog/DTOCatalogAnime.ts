@@ -43,4 +43,6 @@ export class DTOCatalogAnime implements ICatalogAnime{
     sysCrawlerIndexCategory: ObjectId;
     @IsNotEmpty()
     urlCatalog:string;
+    @IsNotEmpty()
+    urlCatalogImage: string;
 }

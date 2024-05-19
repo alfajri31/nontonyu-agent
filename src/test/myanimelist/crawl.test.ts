@@ -3,7 +3,7 @@ import init from "../../db/init";
 import {CatalogServices} from "../../services/CatalogServices";
 import {EnumCatalogTypes} from "../../enum/EnumCatalogTypes";
 import { DTOInitBasedType } from "../../model/global/catalog/DTOInitBasedType";
-import {getHref, getInnerText} from "../../util/CrawlerUtil";
+import {getHref, getInnerText, getSrc} from "../../util/CrawlerUtil";
 import {SelectorCatalogAnime} from "../../selector/SelectorCatalogAnime";
 import {CatalogAnimeTv} from "../../schema/CatalogAnimeSchema";
 import {EnumCategoryCrawl} from "../../enum/EnumCategoryCrawl";
@@ -65,6 +65,7 @@ describe('search anime',  () => {
             dtoCatalogAnime.synopsis = await getInnerText(selectorCatalogAnime.synopsis);
             dtoCatalogAnime.themes = await getInnerText(selectorCatalogAnime.themes);
             dtoCatalogAnime.score = await getInnerText(selectorCatalogAnime.score);
+            dtoCatalogAnime.urlCatalogImage = await getSrc(selectorCatalogAnime.urlCatalogImage);
             dtoCatalogAnime.urlCatalog = href;
             const sysCategoryType = await SysCatalogType.findOne({
                 tipe : EnumCatalogTypes.ANIME

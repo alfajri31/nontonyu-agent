@@ -21,4 +21,5 @@ export interface ICatalogAnime {
     sysCrawlerIndexCategory: ObjectId;
     sysCatalogType: ObjectId;
     urlCatalog:string;
+    urlCatalogImage:string;
 }

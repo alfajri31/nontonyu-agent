@@ -39,5 +39,6 @@ export class SelectorCatalogAnime implements ICatalogAnime{
     sysCatalogType: ObjectId;
     sysCrawlerIndexCategory: ObjectId;
     urlCatalog:string;
+    urlCatalogImage: string="#content > table > tbody > tr > td.borderClass > div > div:nth-child(1) > a > img";
 
 }
