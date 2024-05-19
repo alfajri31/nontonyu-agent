@@ -17,4 +17,7 @@ export interface ICatalogAnimeTv {
     score: string;
     createdAt: Date;
     updatedAt: Date;
+    letterLock :string;
+    sysCrawlerIndexCategory: string;
+    sysCatalogType: string;
 }

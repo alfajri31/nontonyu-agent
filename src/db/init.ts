@@ -19,7 +19,7 @@ export default (async()=> {
             if (!data) {
                 SysCrawlerIndexSeed.forEach(seed => {
                     // @ts-ignore
-                    seed.tipe = result['insertedIds'][0];
+                    seed.sysCatalogType = result['insertedIds'][0];
                 });
                 await SysCrawlerIndex.insertMany(SysCrawlerIndexSeed);
             }
@@ -35,13 +35,13 @@ export default (async()=> {
     /**
      * test Relationship
      */
-    let testRelationOneToMany = await SysCatalogType.find().populate("crawlerIndexes");
+    let testRelationOneToMany = await SysCatalogType.find().populate("sysCrawlerIndexes");
     testRelationOneToMany.forEach(data => {
         if(data.$getPopulatedDocs().length>0) {
             console.log("one to many",data);
             console.log(data.$getPopulatedDocs())
         }
     });
-    let testRelationManyToOne = await SysCrawlerIndex.findOne().populate("tipe");
+    let testRelationManyToOne = await SysCrawlerIndex.findOne().populate("sysCatalogType");
     console.log("many to one",testRelationManyToOne);
 })();

@@ -16,7 +16,7 @@ export const SysCrawlerIndexSeed : {
     completed: boolean;
     letterLock: string;
     category: string;
-    tipe: ""
+    sysCatalogType: ""
 }[] = [
     {
         indexed: false,
@@ -24,7 +24,7 @@ export const SysCrawlerIndexSeed : {
         category:EnumCategoryCrawl.CATALOG,
         completed: false,
         letterLock : "a",
-        tipe: ""
+        sysCatalogType: ""
     }
 ];
 
@@ -32,14 +32,14 @@ export const SysCrawlerIndexSeed : {
 
 export const SysCatalogTypeSeed : (
     {
-        tipe: string
+        sysCatalogType: string
     }
     )[] = [
     {
-        tipe: EnumCatalogTypes.ANIME
+        sysCatalogType: EnumCatalogTypes.ANIME
     },
    {
-        tipe: EnumCatalogTypes.DRAKOR
+        sysCatalogType: EnumCatalogTypes.DRAKOR
     }
 ];
 

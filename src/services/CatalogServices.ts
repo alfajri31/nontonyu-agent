@@ -1,18 +1,16 @@
 import {EnumCategoryCrawl} from "../enum/EnumCategoryCrawl";
 import {ParamInitBasedType} from "../model/global/catalog/ParamInitBasedType";
 import {ICrawlerIndex} from "../schema/interface/ICrawlerIndex";
-import {ParamCatalogAnimeTv} from "../model/myanimelist/catalog/ParamCatalogAnimeTv";
 import {validation} from "../util/ValidationUtil";
 import {SysCrawlerIndex} from "../schema/SysCrawlerIndexSchema";
 import {SysCrawlerIndexCategory} from "../schema/SysCrawlerIndexCategorySchema";
 import {SysCatalogType} from "../schema/SysCatalogTypeSchema";
-import {Injectable} from "../decorator/Decorator";
+import {CatalogAnimeTv} from "../schema/CatalogAnimeSchemaTv";
 
-@Injectable("catalogService")
 export class CatalogServices {
     async searchService(initBasedType : ParamInitBasedType) : Promise<string> {
        await validation(initBasedType);
-        const currentType = await SysCatalogType.findOne({tipe: initBasedType.type});
+        const currentType = await SysCatalogType.findOne({sysCatalogType: initBasedType.type});
         if (currentType !== null) {
             const categoryCrawlerCategory = await SysCrawlerIndexCategory.findOne({name: EnumCategoryCrawl.CATALOG});
             const crawlerIndex = <ICrawlerIndex>{};
@@ -21,7 +19,7 @@ export class CatalogServices {
                 crawlerIndex.category = String(categoryCrawlerCategory?.get("name"));
                 crawlerIndex.letterLock = String(await this.searchLockService());
                 crawlerIndex.result = 0;
-                crawlerIndex.tipe = Object(currentType.get("_id"));
+                crawlerIndex.sysCatalogType = Object(currentType.get("_id"));
                 await SysCrawlerIndex.replaceOne({}, crawlerIndex);
             }
             return crawlerIndex.letterLock;
@@ -54,13 +52,7 @@ export class CatalogServices {
 
     }
 
-    async crawlCatalog(paramCatalogAnime: ParamCatalogAnimeTv):Promise<boolean> {
-        /**
-         * Algorithm
-         * Jika size list adalah 5 maka
-         * Masukan data list anime sebanyak 5 dengan go_into_page kemudian cek elemen yang relevan lagi
-         */
-        await validation(paramCatalogAnime);
+    async crawlCatalog(interfaces: any[]):Promise<boolean> {
         return true;
     }
 }

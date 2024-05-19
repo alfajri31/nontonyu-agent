@@ -10,7 +10,7 @@ export const SysCrawlerIndexSchema: Schema<ICrawlerIndex> = new Schema({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     rangeCap: {type:Number,default:2},
-    tipe: {
+    sysCatalogType: {
         type: mongoose.Schema.Types.ObjectId,
         ref:"SysCatalogType"
     },

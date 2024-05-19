@@ -20,7 +20,10 @@ export const CatalogAnimeSchemaTv: Schema<ICatalogAnimeTv> = new Schema({
     type: { type: String, required: true },
     score : { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
+    updatedAt: { type: Date, default: Date.now },
+    letterLock: { type: String, required: true },
+    sysCatalogType : {type: String,required: true},
+    sysCrawlerIndexCategory: {type: String,required: true}
 },{collection:"catalog_anime_tv"});
 
 export const CatalogAnimeTv = mongoose.model('CatalogAnimeTv', CatalogAnimeSchemaTv);

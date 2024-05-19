@@ -9,10 +9,10 @@ export const SysCatalogTypeSchema: Schema<ICatalogType> = new Schema({
     collection:"sys_catalog_type"
 });
 
-SysCatalogTypeSchema.virtual("crawlerIndexes", {
+SysCatalogTypeSchema.virtual("sysCrawlerIndexes", {
     ref: "SysCrawlerIndex",
     localField: '_id',
-    foreignField: 'tipe'
+    foreignField: 'sysCatalogType'
 })
 
 export const SysCatalogType = mongoose.model('SysCatalogType', SysCatalogTypeSchema);

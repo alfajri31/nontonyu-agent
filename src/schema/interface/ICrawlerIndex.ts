@@ -6,7 +6,7 @@ export interface ICrawlerIndex {
     category:string;
     completed: boolean;
     letterLock : string;
-    tipe: mongoose.Types.ObjectId;
+    sysCatalogType: mongoose.Types.ObjectId;
     createdAt: Date;
     updatedAt: Date;
     rangeCap: number;
