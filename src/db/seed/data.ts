@@ -32,17 +32,17 @@ export const SysCrawlerIndexSeed : {
 
 export const SysCatalogTypeSeed : (
     {
-        sysCatalogType: string
+        tipe: string
     }
     )[] = [
     {
-        sysCatalogType: EnumCatalogTypes.ANIME
+        tipe: EnumCatalogTypes.ANIME
     },
    {
-        sysCatalogType: EnumCatalogTypes.DRAKOR
+        tipe: EnumCatalogTypes.DRAKOR
     },
     {
-        sysCatalogType: EnumCatalogTypes.VIRAL
+        tipe: EnumCatalogTypes.VIRAL
     }
 ];
 

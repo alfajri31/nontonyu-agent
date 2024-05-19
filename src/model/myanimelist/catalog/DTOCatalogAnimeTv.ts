@@ -24,10 +24,6 @@ export class DTOCatalogAnimeTv implements ICatalogAnimeTv{
     @IsNotEmpty()
     producers: string;
     @IsNotEmpty()
-    rating: string;
-    @IsNotEmpty()
-    source: string;
-    @IsNotEmpty()
     studios: string;
     @IsNotEmpty()
     themes: string;

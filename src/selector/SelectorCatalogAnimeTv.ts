@@ -8,7 +8,7 @@ export class SelectorCatalogAnimeTv implements ICatalogAnimeTv{
     broadcast: string = "#content > table > tbody > tr > td.borderClass > div > div:nth-child(20) > span";
     createdAt: Date;
     duration: string = "#content > table > tbody > tr > td.borderClass > div > div:nth-child(28)";
-    episodes: string ="#content > table > tbody > tr > td.borderClass > div > div:nth-child(16) > span";
+    episodes: string ="#content > table > tbody > tr > td.borderClass > div > div:nth-child(18)";
     genres: string ="" +
         "#content > table > tbody > tr > td.borderClass > div > div:nth-child(25) > a:nth-child(3)," +
         "#content > table > tbody > tr > td.borderClass > div > div:nth-child(25) > a:nth-child(5)";
@@ -18,9 +18,7 @@ export class SelectorCatalogAnimeTv implements ICatalogAnimeTv{
         "#content > table > tbody > tr > td.borderClass > div > div:nth-child(21) > a:nth-child(2)," +
         "#content > table > tbody > tr > td.borderClass > div > div:nth-child(21) > a:nth-child(3)," +
         "#content > table > tbody > tr > td.borderClass > div > div:nth-child(21) > a:nth-child(4)";
-    rating: string ="#content > table > tbody > tr > td.borderClass > div > div:nth-child(29) > span";
     score: string ="#content > table > tbody > tr > td.borderClass > div > div:nth-child(32) > span.score-label.score-6";
-    source: string ="#content > table > tbody > tr > td.borderClass > div > div:nth-child(24) > span";
     studios: string ="#content > table > tbody > tr > td.borderClass > div > div:nth-child(23) > a";
     synopsis: string ="#content > table > tbody > tr > td:nth-child(2) > div.rightside.js-scrollfix-bottom-rel > table > tbody > tr:nth-child(1) > td > p";
     themes: string ="#content > table > tbody > tr > td.borderClass > div > div:nth-child(26) > a";

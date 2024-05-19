@@ -11,7 +11,7 @@ import * as fs from "fs";
 export class CatalogServices {
     async searchService(initBasedType : DTOInitBasedType) : Promise<string> {
        await validation(initBasedType);
-        const currentType = await SysCatalogType.findOne({sysCatalogType: initBasedType.type});
+        const currentType = await SysCatalogType.findOne({tipe: initBasedType.type});
         if (currentType !== null) {
             const categoryCrawlerCategory = await SysCrawlerIndexCategory.findOne({name: EnumCategoryCrawl.CATALOG});
             const crawlerIndex = <ICrawlerIndex>{};
@@ -54,10 +54,12 @@ export class CatalogServices {
 
     async createCrawl(objects: Object[],model:Model<any>): Promise<any> {
         const fullProp = objects.filter(object => {
+            const tmp :string[]=[];
             for (const key in object) {
                 // @ts-ignore
-                return object[key] != '';
+                tmp.push(object[key])
             }
+            return tmp.every(el => el!='');
         });
         let jsonString = JSON.stringify(objects);
         let jsonPretty = JSON.stringify(JSON.parse(jsonString),null,2);
@@ -66,7 +68,17 @@ export class CatalogServices {
                 return console.error(err);
             }
         });
-        return fullProp.length > 0 ? await model.create(fullProp)
+        for (const data of objects) {
+            // @ts-ignore
+            let letterLock = data["letterLock"]
+            await model.deleteOne({
+                letterLock : letterLock
+            })
+        }
+        return fullProp.length > 0 ?
+            (async function () {
+                await model.create(fullProp)
+            }())
             : (function(){
                 throw "ERROR: Partial object on every prop must have value," +
             "please adjust the selector and see the output object"

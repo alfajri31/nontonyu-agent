@@ -7,6 +7,10 @@ import {getHref, getText} from "../../util/CrawlerUtil";
 import {DTOCatalogAnimeTv} from "../../model/myanimelist/catalog/DTOCatalogAnimeTv";
 import {SelectorCatalogAnimeTv} from "../../selector/SelectorCatalogAnimeTv";
 import {CatalogAnimeTv} from "../../schema/CatalogAnimeSchemaTv";
+import {EnumCategoryCrawl} from "../../enum/EnumCategoryCrawl";
+import {SysCatalogType} from "../../schema/SysCatalogTypeSchema";
+import {SysCrawlerIndex} from "../../schema/SysCrawlerIndexSchema";
+import {SysCrawlerIndexCategory} from "../../schema/SysCrawlerIndexCategorySchema";
 
 let browser: any;
 export let page: any;
@@ -59,10 +63,16 @@ describe('search anime',  () => {
             dtoCatalogAnimeTv.premired = await getText(selectorCatalogAnimeTv.premired);
             dtoCatalogAnimeTv.producers = await getText(selectorCatalogAnimeTv.producers);
             dtoCatalogAnimeTv.synopsis = await getText(selectorCatalogAnimeTv.synopsis);
-            dtoCatalogAnimeTv.rating = await getText(selectorCatalogAnimeTv.rating);
-            dtoCatalogAnimeTv.source = await getText(selectorCatalogAnimeTv.source);
             dtoCatalogAnimeTv.themes = await getText(selectorCatalogAnimeTv.themes);
             dtoCatalogAnimeTv.score = await getText(selectorCatalogAnimeTv.score);
+            const sysCategoryType = await SysCatalogType.findOne({
+                tipe : EnumCatalogTypes.ANIME
+            })
+            sysCategoryType? dtoCatalogAnimeTv.sysCatalogType = sysCategoryType.get("_id") :"";
+            const sysCrawlerIndexCategory = await SysCrawlerIndexCategory.findOne({
+                name : EnumCategoryCrawl.CATALOG
+            })
+            sysCrawlerIndexCategory? dtoCatalogAnimeTv.sysCrawlerIndexCategory=sysCrawlerIndexCategory.get("_id") :"";
             dtoCatalogAnimeTv.letterLock = letterLock;
             dtoCatalogAnimeTvList.push(dtoCatalogAnimeTv);
         }
