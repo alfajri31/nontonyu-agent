@@ -47,7 +47,7 @@ describe('search anime',  () => {
         await new Promise(r => setTimeout(r, 2000));
         const hrefs = await getHref('#topSearchResultList');
         let dtoCatalogAnimeTvList : DTOCatalogAnimeTv[]=[];
-        let href="";
+        // let href="https://myanimelist.net/manga/3721/AAA?q=aa%20&cat=manga";
         for (const href of hrefs) {
             await page.goto(href);
             const dtoCatalogAnimeTv = new DTOCatalogAnimeTv();

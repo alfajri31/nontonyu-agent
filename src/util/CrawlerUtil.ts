@@ -29,7 +29,8 @@ export async function getInnerText(selector:string,contain?:string|undefined) :P
         }catch (e){}
     }
     if(contain) {
-        textArray.filter((data => data.match("/"+contain+"/")));
+        const regexExp = new RegExp(contain,'i');
+        textArray = textArray.filter((data => data.match(regexExp)));
     }
     // @ts-ignore
     return textArray.toString()

@@ -80,7 +80,7 @@ export class CatalogServices {
                 await model.create(fullProp)
             }())
             : (function(){
-                throw "ERROR: An object on every prop must have value," +
+                throw "ERROR: An object on every property must have a value," +
             "please adjust the selector and see the output object"
             }());
     }
