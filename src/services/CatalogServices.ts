@@ -59,7 +59,6 @@ export class CatalogServices {
             }
         });
         return fullProp.length > 0 ? await model.create(fullProp)
-            : (function(){throw "Data must full filled with value," +
-            "please adjust the selector!"}());
+            : (function(){throw "ERROR: A single object on every prop should have value"}());
     }
 }
