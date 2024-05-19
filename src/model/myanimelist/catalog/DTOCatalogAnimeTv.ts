@@ -1,7 +1,8 @@
 import {ICatalogAnimeTv} from "../../../schema/interface/ICatalogAnimeTv";
 import {IsNotEmpty} from "class-validator";
+import {ObjectId} from "mongodb";
 
-export class ParamCatalogAnimeTv implements ICatalogAnimeTv{
+export class DTOCatalogAnimeTv implements ICatalogAnimeTv{
     @IsNotEmpty()
     synopsis: string;
     @IsNotEmpty()
@@ -38,4 +39,10 @@ export class ParamCatalogAnimeTv implements ICatalogAnimeTv{
     updatedAt: Date;
     @IsNotEmpty()
     score: string;
+    @IsNotEmpty()
+    letterLock: string;
+    @IsNotEmpty()
+    sysCatalogType: ObjectId;
+    @IsNotEmpty()
+    sysCrawlerIndexCategory: ObjectId;
 }

@@ -1,3 +1,5 @@
+import {ObjectId} from "mongodb";
+
 export interface ICatalogAnimeTv {
     type: string;
     title: string;
@@ -18,6 +20,6 @@ export interface ICatalogAnimeTv {
     createdAt: Date;
     updatedAt: Date;
     letterLock :string;
-    sysCrawlerIndexCategory: string;
-    sysCatalogType: string;
+    sysCrawlerIndexCategory: ObjectId;
+    sysCatalogType: ObjectId;
 }

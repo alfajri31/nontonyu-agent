@@ -1,6 +1,6 @@
 import {IsNotEmpty} from "class-validator";
 
-export class ParamCrawlSize {
+export class DTOCrawlSize {
     @IsNotEmpty()
     sizeList:number;
 }

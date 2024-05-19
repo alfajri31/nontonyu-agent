@@ -1,4 +1,5 @@
 import {ICatalogAnimeTv} from "../schema/interface/ICatalogAnimeTv";
+import {ObjectId} from "mongodb";
 
 export class SelectorCatalogAnimeTv implements ICatalogAnimeTv{
 
@@ -26,7 +27,7 @@ export class SelectorCatalogAnimeTv implements ICatalogAnimeTv{
     title: string='#contentWrapper > div:nth-child(1) > div > div.h1-title > div > h1 > strong';
     type: string="#content > table > tbody > tr > td.borderClass > div > div:nth-child(15) > a";
     updatedAt: Date;
-    sysCatalogType: string;
-    sysCrawlerIndexCategory: string;
+    sysCatalogType: ObjectId;
+    sysCrawlerIndexCategory: ObjectId;
 
 }

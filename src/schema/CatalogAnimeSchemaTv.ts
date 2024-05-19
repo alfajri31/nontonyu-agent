@@ -22,8 +22,16 @@ export const CatalogAnimeSchemaTv: Schema<ICatalogAnimeTv> = new Schema({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     letterLock: { type: String, required: true },
-    sysCatalogType : {type: String,required: true},
-    sysCrawlerIndexCategory: {type: String,required: true}
+    sysCatalogType : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "SysCatalogType",
+        required: true
+    },
+    sysCrawlerIndexCategory: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref : "SysCatalogType",
+        required: true
+    }
 },{collection:"catalog_anime_tv"});
 
 export const CatalogAnimeTv = mongoose.model('CatalogAnimeTv', CatalogAnimeSchemaTv);

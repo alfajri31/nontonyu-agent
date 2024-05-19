@@ -1,14 +1,14 @@
 import {EnumCategoryCrawl} from "../enum/EnumCategoryCrawl";
-import {ParamInitBasedType} from "../model/global/catalog/ParamInitBasedType";
+import {DTOInitBasedType} from "../model/global/catalog/DTOInitBasedType";
 import {ICrawlerIndex} from "../schema/interface/ICrawlerIndex";
 import {validation} from "../util/ValidationUtil";
 import {SysCrawlerIndex} from "../schema/SysCrawlerIndexSchema";
 import {SysCrawlerIndexCategory} from "../schema/SysCrawlerIndexCategorySchema";
 import {SysCatalogType} from "../schema/SysCatalogTypeSchema";
-import {CatalogAnimeTv} from "../schema/CatalogAnimeSchemaTv";
+import {Model} from "mongoose";
 
 export class CatalogServices {
-    async searchService(initBasedType : ParamInitBasedType) : Promise<string> {
+    async searchService(initBasedType : DTOInitBasedType) : Promise<string> {
        await validation(initBasedType);
         const currentType = await SysCatalogType.findOne({sysCatalogType: initBasedType.type});
         if (currentType !== null) {
@@ -49,10 +49,17 @@ export class CatalogServices {
         else {
             return "";
         }
-
     }
 
-    async crawlCatalog(interfaces: any[]):Promise<boolean> {
-        return true;
+    async createCrawl(objects: Object[],model:Model<any>): Promise<any> {
+        const fullProp = objects.filter(object => {
+            for (const key in object) {
+                // @ts-ignore
+                return object[key] != '';
+            }
+        });
+        return fullProp.length > 0 ? await model.create(fullProp)
+            : (function(){throw "Data must full filled with value," +
+            "please adjust the selector!"}());
     }
 }

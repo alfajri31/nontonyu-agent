@@ -2,10 +2,11 @@ import puppeteer from "puppeteer";
 import init from "../../db/init";
 import {CatalogServices} from "../../services/CatalogServices";
 import {EnumCatalogTypes} from "../../enum/EnumCatalogTypes";
-import { ParamInitBasedType } from "../../model/global/catalog/ParamInitBasedType";
+import { DTOInitBasedType } from "../../model/global/catalog/DTOInitBasedType";
 import {getHref, getText} from "../../util/CrawlerUtil";
+import {DTOCatalogAnimeTv} from "../../model/myanimelist/catalog/DTOCatalogAnimeTv";
 import {SelectorCatalogAnimeTv} from "../../selector/SelectorCatalogAnimeTv";
-import {ICatalogAnimeTv} from "../../schema/interface/ICatalogAnimeTv";
+import {CatalogAnimeTv} from "../../schema/CatalogAnimeSchemaTv";
 
 let browser: any;
 export let page: any;
@@ -24,7 +25,7 @@ afterAll(async () => {
 });
 describe('search anime',  () => {
     let catalogService: CatalogServices = new CatalogServices();
-    let initBasedType: ParamInitBasedType = new ParamInitBasedType();
+    let initBasedType: DTOInitBasedType = new DTOInitBasedType();
     let selectorCatalogAnimeTv: SelectorCatalogAnimeTv = new SelectorCatalogAnimeTv();
     let letterLock: string;
     it('Init Based Type', async () => {
@@ -41,31 +42,31 @@ describe('search anime',  () => {
         await new Promise(r => setTimeout(r, 2000));
         await page.type('#topSearchText'," ");
         await new Promise(r => setTimeout(r, 2000));
-        const href = await getHref('#topSearchResultList');
-        let catalogAnimeTvList : ICatalogAnimeTv[]=[];
-        for (const link of href) {
-            await page.goto(link);
-            const catalogAnimeTv = <ICatalogAnimeTv>{};
-            catalogAnimeTv.title = await getText(selectorCatalogAnimeTv.title);
-            catalogAnimeTv.type = await getText(selectorCatalogAnimeTv.type);
-            catalogAnimeTv.studios = await getText(selectorCatalogAnimeTv.studios);
-            catalogAnimeTv.aired = await getText(selectorCatalogAnimeTv.aired);
-            catalogAnimeTv.broadcast = await getText(selectorCatalogAnimeTv.broadcast);
-            catalogAnimeTv.duration = await getText(selectorCatalogAnimeTv.duration);
-            catalogAnimeTv.episodes = await getText(selectorCatalogAnimeTv.episodes);
-            catalogAnimeTv.genres = await getText(selectorCatalogAnimeTv.genres);
-            catalogAnimeTv.licensors= await getText(selectorCatalogAnimeTv.licensors);
-            catalogAnimeTv.premired = await getText(selectorCatalogAnimeTv.premired);
-            catalogAnimeTv.producers = await getText(selectorCatalogAnimeTv.producers);
-            catalogAnimeTv.synopsis = await getText(selectorCatalogAnimeTv.synopsis);
-            catalogAnimeTv.rating = await getText(selectorCatalogAnimeTv.rating);
-            catalogAnimeTv.source = await getText(selectorCatalogAnimeTv.source);
-            catalogAnimeTv.themes = await getText(selectorCatalogAnimeTv.themes);
-            catalogAnimeTv.score = await getText(selectorCatalogAnimeTv.score);
-            catalogAnimeTv.letterLock = letterLock;
-            catalogAnimeTvList.push(catalogAnimeTv);
+        const hrefs = await getHref('#topSearchResultList');
+        let dtoCatalogAnimeTvList : DTOCatalogAnimeTv[]=[];
+        for (const href of hrefs) {
+            await page.goto(href);
+            const dtoCatalogAnimeTv = new DTOCatalogAnimeTv();
+            dtoCatalogAnimeTv.title = await getText(selectorCatalogAnimeTv.title);
+            dtoCatalogAnimeTv.type = await getText(selectorCatalogAnimeTv.type);
+            dtoCatalogAnimeTv.studios = await getText(selectorCatalogAnimeTv.studios);
+            dtoCatalogAnimeTv.aired = await getText(selectorCatalogAnimeTv.aired);
+            dtoCatalogAnimeTv.broadcast = await getText(selectorCatalogAnimeTv.broadcast);
+            dtoCatalogAnimeTv.duration = await getText(selectorCatalogAnimeTv.duration);
+            dtoCatalogAnimeTv.episodes = await getText(selectorCatalogAnimeTv.episodes);
+            dtoCatalogAnimeTv.genres = await getText(selectorCatalogAnimeTv.genres);
+            dtoCatalogAnimeTv.licensors= await getText(selectorCatalogAnimeTv.licensors);
+            dtoCatalogAnimeTv.premired = await getText(selectorCatalogAnimeTv.premired);
+            dtoCatalogAnimeTv.producers = await getText(selectorCatalogAnimeTv.producers);
+            dtoCatalogAnimeTv.synopsis = await getText(selectorCatalogAnimeTv.synopsis);
+            dtoCatalogAnimeTv.rating = await getText(selectorCatalogAnimeTv.rating);
+            dtoCatalogAnimeTv.source = await getText(selectorCatalogAnimeTv.source);
+            dtoCatalogAnimeTv.themes = await getText(selectorCatalogAnimeTv.themes);
+            dtoCatalogAnimeTv.score = await getText(selectorCatalogAnimeTv.score);
+            dtoCatalogAnimeTv.letterLock = letterLock;
+            dtoCatalogAnimeTvList.push(dtoCatalogAnimeTv);
         }
-        await catalogService.crawlCatalog(catalogAnimeTvList)
+        await catalogService.createCrawl(dtoCatalogAnimeTvList,CatalogAnimeTv)
     });
 });
 
