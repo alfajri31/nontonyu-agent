@@ -4,7 +4,7 @@ import {CatalogServices} from "../../services/CatalogServices";
 import {EnumCatalogTypes} from "../../enum/EnumCatalogTypes";
 import { DTOInitBasedType } from "../../model/global/catalog/DTOInitBasedType";
 import {getHref, getInnerText} from "../../util/CrawlerUtil";
-import {SelectorCatalogAnimeTv} from "../../selector/SelectorCatalogAnimeTv";
+import {SelectorCatalogAnime} from "../../selector/SelectorCatalogAnime";
 import {CatalogAnimeTv} from "../../schema/CatalogAnimeSchema";
 import {EnumCategoryCrawl} from "../../enum/EnumCategoryCrawl";
 import {SysCatalogType} from "../../schema/SysCatalogTypeSchema";
@@ -29,7 +29,7 @@ afterAll(async () => {
 describe('search anime',  () => {
     let catalogService: CatalogServices = new CatalogServices();
     let initBasedType: DTOInitBasedType = new DTOInitBasedType();
-    let selectorCatalogAnimeTv: SelectorCatalogAnimeTv = new SelectorCatalogAnimeTv();
+    let selectorCatalogAnime: SelectorCatalogAnime = new SelectorCatalogAnime();
     let letterLock: string;
     it('Init Based Type', async () => {
         initBasedType.type = EnumCatalogTypes.ANIME;
@@ -51,20 +51,20 @@ describe('search anime',  () => {
         for (const href of hrefs) {
             await page.goto(href);
             const dtoCatalogAnime = new DTOCatalogAnime();
-            dtoCatalogAnime.title = await getInnerText(selectorCatalogAnimeTv.title);
-            dtoCatalogAnime.type = await getInnerText(selectorCatalogAnimeTv.type);
-            dtoCatalogAnime.studios = await getInnerText(selectorCatalogAnimeTv.studios);
-            dtoCatalogAnime.aired = await getInnerText(selectorCatalogAnimeTv.aired);
-            dtoCatalogAnime.broadcast = await getInnerText(selectorCatalogAnimeTv.broadcast);
-            dtoCatalogAnime.duration = await getInnerText(selectorCatalogAnimeTv.duration);
-            dtoCatalogAnime.episodes = await getInnerText(selectorCatalogAnimeTv.episodes);
-            dtoCatalogAnime.genres = await getInnerText(selectorCatalogAnimeTv.genres,"genres");
-            dtoCatalogAnime.licensors= await getInnerText(selectorCatalogAnimeTv.licensors);
-            dtoCatalogAnime.premired = await getInnerText(selectorCatalogAnimeTv.premired);
-            dtoCatalogAnime.producers = await getInnerText(selectorCatalogAnimeTv.producers);
-            dtoCatalogAnime.synopsis = await getInnerText(selectorCatalogAnimeTv.synopsis);
-            dtoCatalogAnime.themes = await getInnerText(selectorCatalogAnimeTv.themes);
-            dtoCatalogAnime.score = await getInnerText(selectorCatalogAnimeTv.score);
+            dtoCatalogAnime.title = await getInnerText(selectorCatalogAnime.title);
+            dtoCatalogAnime.type = await getInnerText(selectorCatalogAnime.type);
+            dtoCatalogAnime.studios = await getInnerText(selectorCatalogAnime.studios);
+            dtoCatalogAnime.aired = await getInnerText(selectorCatalogAnime.aired);
+            dtoCatalogAnime.broadcast = await getInnerText(selectorCatalogAnime.broadcast);
+            dtoCatalogAnime.duration = await getInnerText(selectorCatalogAnime.duration);
+            dtoCatalogAnime.episodes = await getInnerText(selectorCatalogAnime.episodes);
+            dtoCatalogAnime.genres = await getInnerText(selectorCatalogAnime.genres,"genres");
+            dtoCatalogAnime.licensors= await getInnerText(selectorCatalogAnime.licensors);
+            dtoCatalogAnime.premired = await getInnerText(selectorCatalogAnime.premired);
+            dtoCatalogAnime.producers = await getInnerText(selectorCatalogAnime.producers);
+            dtoCatalogAnime.synopsis = await getInnerText(selectorCatalogAnime.synopsis);
+            dtoCatalogAnime.themes = await getInnerText(selectorCatalogAnime.themes);
+            dtoCatalogAnime.score = await getInnerText(selectorCatalogAnime.score);
             dtoCatalogAnime.urlCatalog = href;
             const sysCategoryType = await SysCatalogType.findOne({
                 tipe : EnumCatalogTypes.ANIME
