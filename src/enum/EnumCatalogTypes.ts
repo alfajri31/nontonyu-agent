@@ -1,6 +1,7 @@
 export enum EnumCatalogTypes{
     ANIME = "Anime",
-    DRAKOR = "Drakor"
+    DRAKOR = "Drakor",
+    VIRAL = "Viralism",
 }
 type catalogTypes = EnumCatalogTypes.ANIME | EnumCatalogTypes.DRAKOR
 export const EnumCatalogTypesCollection: catalogTypes[] = [

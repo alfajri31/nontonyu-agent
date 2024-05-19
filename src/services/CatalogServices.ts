@@ -6,6 +6,7 @@ import {SysCrawlerIndex} from "../schema/SysCrawlerIndexSchema";
 import {SysCrawlerIndexCategory} from "../schema/SysCrawlerIndexCategorySchema";
 import {SysCatalogType} from "../schema/SysCatalogTypeSchema";
 import {Model} from "mongoose";
+import * as fs from "fs";
 
 export class CatalogServices {
     async searchService(initBasedType : DTOInitBasedType) : Promise<string> {
@@ -58,8 +59,17 @@ export class CatalogServices {
                 return object[key] != '';
             }
         });
+        let jsonString = JSON.stringify(objects);
+        let jsonPretty = JSON.stringify(JSON.parse(jsonString),null,2);
+        fs.writeFile('src/logs/'+model.modelName+'.json', jsonPretty,  function(err) {
+            if (err) {
+                return console.error(err);
+            }
+        });
         return fullProp.length > 0 ? await model.create(fullProp)
-            : (function(){throw "ERROR: Partial object on every prop must have value," +
-            "please adjust the selector and see the output object"}());
+            : (function(){
+                throw "ERROR: Partial object on every prop must have value," +
+            "please adjust the selector and see the output object"
+            }());
     }
 }

@@ -40,6 +40,9 @@ export const SysCatalogTypeSeed : (
     },
    {
         sysCatalogType: EnumCatalogTypes.DRAKOR
+    },
+    {
+        sysCatalogType: EnumCatalogTypes.VIRAL
     }
 ];
 
