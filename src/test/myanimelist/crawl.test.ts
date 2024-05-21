@@ -47,8 +47,8 @@ describe('search anime',  () => {
         await new Promise(r => setTimeout(r, 2000));
         const hrefs = await getHref('#topSearchResultList');
         let dtoCatalogAnimeList : DTOCatalogAnime[]=[];
-        let href="https://myanimelist.net/anime/50/Aa_Megami-sama_TV?q=aa%20&cat=anime";
-        // for (const href of hrefs) {
+        // let href="https://myanimelist.net/anime/50/Aa_Megami-sama_TV?q=aa%20&cat=anime";
+        for (const href of hrefs) {
             await page.goto(href);
             const dtoCatalogAnime = new DTOCatalogAnime();
             dtoCatalogAnime.title = await getInnerText(selectorCatalogAnime.title);
@@ -77,7 +77,7 @@ describe('search anime',  () => {
             sysCrawlerIndexCategory? dtoCatalogAnime.sysCrawlerIndexCategory=sysCrawlerIndexCategory.get("_id") :"";
             dtoCatalogAnime.letterLock = letterLock;
             dtoCatalogAnimeList.push(dtoCatalogAnime);
-        // }
+        }
         await catalogService.createCrawl(dtoCatalogAnimeList,CatalogAnimeTv)
     });
 });

@@ -59,7 +59,7 @@ export class CatalogServices {
                 // @ts-ignore
                 tmp.push(object[key])
             }
-            return tmp.every(el => el!=''||null||undefined);
+            return tmp.every(el => el!==''||null||undefined);
         });
         let jsonString = JSON.stringify(objects);
         let jsonPretty = JSON.stringify(JSON.parse(jsonString),null,2);
