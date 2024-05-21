@@ -1,5 +1,5 @@
 import mongoose, {Schema} from 'mongoose';
-import {ICatalogType} from "./interface/ICatalogType";
+import {ICatalogType} from "../interface/ICatalogType";
 
 export const SysCatalogTypeSchema: Schema<ICatalogType> = new Schema({
     tipe: { type: String, required: true },

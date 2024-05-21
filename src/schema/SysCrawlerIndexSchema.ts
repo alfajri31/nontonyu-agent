@@ -1,5 +1,5 @@
 import mongoose, {Schema} from 'mongoose';
-import {ICrawlerIndex} from "./interface/ICrawlerIndex";
+import {ICrawlerIndex} from "../interface/ICrawlerIndex";
 
 
 export const SysCrawlerIndexSchema: Schema<ICrawlerIndex> = new Schema({

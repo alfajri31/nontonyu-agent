@@ -1,6 +1,5 @@
 import {EnumCatalogTypes} from "../../enum/EnumCatalogTypes";
 import {EnumCategoryCrawl} from "../../enum/EnumCategoryCrawl";
-import {ObjectId} from "mongodb";
 
 export const SysCrawlerIndexCategorySeed :
     {

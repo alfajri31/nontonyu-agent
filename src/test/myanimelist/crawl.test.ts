@@ -2,7 +2,7 @@ import puppeteer from "puppeteer";
 import init from "../../db/init";
 import {CatalogServices} from "../../services/CatalogServices";
 import {EnumCatalogTypes} from "../../enum/EnumCatalogTypes";
-import { DTOInitBasedType } from "../../model/global/catalog/DTOInitBasedType";
+import {DTOInitBasedType} from "../../model/global/catalog/DTOInitBasedType";
 import {getHref, getInnerText, getSrc} from "../../util/CrawlerUtil";
 import {SelectorCatalogAnime} from "../../selector/SelectorCatalogAnime";
 import {CatalogAnimeTv} from "../../schema/CatalogAnimeSchema";
@@ -37,7 +37,7 @@ describe('search anime',  () => {
     },60000);
     it('Open gate MyAnimeList', async () => {
         page = await browser.newPage();
-        await page.goto("https://myanimelist.net");
+        await page.goto("https://myanimelist.net",{timeout:60000});
     },60000);
     it('How many anime that appear in list', async () => {
         await page.click('#topSearchText');
@@ -49,7 +49,7 @@ describe('search anime',  () => {
         let dtoCatalogAnimeList : DTOCatalogAnime[]=[];
         let href="https://myanimelist.net/anime/50/Aa_Megami-sama_TV?q=aa%20&cat=anime";
         // for (const href of hrefs) {
-            await page.goto(href);
+            await page.goto(href,{timeout:60000});
             const dtoCatalogAnime = new DTOCatalogAnime();
             dtoCatalogAnime.title = await getInnerText(selectorCatalogAnime.title);
             dtoCatalogAnime.type = await getInnerText(selectorCatalogAnime.type);

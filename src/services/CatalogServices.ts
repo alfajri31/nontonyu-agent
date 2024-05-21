@@ -1,12 +1,13 @@
 import {EnumCategoryCrawl} from "../enum/EnumCategoryCrawl";
 import {DTOInitBasedType} from "../model/global/catalog/DTOInitBasedType";
-import {ICrawlerIndex} from "../schema/interface/ICrawlerIndex";
 import {validation} from "../util/ValidationUtil";
 import {SysCrawlerIndex} from "../schema/SysCrawlerIndexSchema";
 import {SysCrawlerIndexCategory} from "../schema/SysCrawlerIndexCategorySchema";
 import {SysCatalogType} from "../schema/SysCatalogTypeSchema";
-import mongoose, {Model} from "mongoose";
+import {Model} from "mongoose";
 import * as fs from "fs";
+import {ICrawlerIndexCategory} from "../interface/ICrawlerIndexCategory";
+import {ICrawlerIndex} from "../interface/ICrawlerIndex";
 
 export class CatalogServices {
     async searchService(initBasedType : DTOInitBasedType) : Promise<string> {
@@ -68,6 +69,7 @@ export class CatalogServices {
                 return console.error(err);
             }
         });
+
         return fullProp.length > 0 ?
             (async function () {
                 for (const data of objects) {
@@ -77,11 +79,27 @@ export class CatalogServices {
                         letterLock : letterLock
                     })
                 }
-                await model.create(fullProp)
+                 await model.create(fullProp)
+                /**
+                 * logic complete crawler and increase the letterLock
+                 */
+                const singleData = <ICrawlerIndex><unknown>fullProp[0]
+                await letterLockCompleted(singleData);
             }())
             : (async function () {
                 throw "ERROR: An object on every property must have a value," +
                 "please adjust the selector and see the output object"
             }());
+
+        async function letterLockCompleted(singleData: ICrawlerIndex) {
+            const letters =
+                ['a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z'];
+            let data : ICrawlerIndexCategory
+            data = <ICrawlerIndexCategory><unknown> await SysCrawlerIndex.findOne({
+                sysCrawlerIndexCategory: singleData.sysCrawlerIndexCategory
+            }).populate('sysCrawlerIndexCategory').populate('sysCatalogType');
+            //increase letter and update sysCrawlerIndex letterLock
+            console.log(data);
+        }
     }
 }

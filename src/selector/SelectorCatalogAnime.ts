@@ -1,5 +1,6 @@
-import {ICatalogAnime} from "../schema/interface/ICatalogAnime";
+
 import {ObjectId} from "mongodb";
+import {ICatalogAnime} from "../interface/ICatalogAnime";
 
 export class SelectorCatalogAnime implements ICatalogAnime{
 
