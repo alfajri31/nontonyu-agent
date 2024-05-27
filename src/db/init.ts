@@ -4,6 +4,7 @@ import {SysCrawlerIndex} from "../schema/SysCrawlerIndexSchema";
 import {SysCrawlerIndexCategory} from "../schema/SysCrawlerIndexCategorySchema";
 import {SysCatalogTypeSeed, SysCrawlerIndexCategorySeed, SysCrawlerIndexSeed} from "./seed/data";
 import {CatalogAnimeTv} from "../schema/CatalogAnimeSchema";
+import {SysCrawlerIndexHist} from "../schema/SysCrawlerIndexHistorySchema";
 
 export default (async()=> {
     await mongoose.connect("mongodb://127.0.0.1/nontonyu");
@@ -44,4 +45,5 @@ export default (async()=> {
     });
     let testRelationManyToOne = await SysCrawlerIndex.findOne().populate("sysCatalogType");
     console.log("many to one",testRelationManyToOne);
+    await SysCrawlerIndexHist.createCollection();
 })();

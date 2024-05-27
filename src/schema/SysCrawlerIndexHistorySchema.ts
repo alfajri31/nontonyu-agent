@@ -12,4 +12,6 @@ export const SysCrawlerIndexHistSchema: Schema<ICrawlerIndexHist> = new Schema({
     collection:"sys_crawler_index_history"
 });
 
+SysCrawlerIndexHistSchema.index({sysCrawlerIndex:1,sysCrawlerIndexCategory:1},{unique:true})
+
 export const SysCrawlerIndexHist = mongoose.model('SysCrawlerIndexHist', SysCrawlerIndexHistSchema);

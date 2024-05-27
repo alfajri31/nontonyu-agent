@@ -7,6 +7,8 @@ import {SysCatalogType} from "../schema/SysCatalogTypeSchema";
 import {Model} from "mongoose";
 import * as fs from "fs";
 import {ICrawlerIndex} from "../interface/ICrawlerIndex";
+import {SysCrawlerIndexHist} from "../schema/SysCrawlerIndexHistorySchema";
+import {ICrawlerIndexHist} from "../interface/ICrawlerIndexHist";
 
 export class CatalogServices {
     async searchService(initBasedType : DTOInitBasedType) : Promise<string> {
@@ -92,17 +94,26 @@ export class CatalogServices {
 
         async function letterLockCompleted(singleData: ICrawlerIndex) {
             let data : ICrawlerIndex
+            const crawlerIndexHist = <ICrawlerIndexHist>{};
+            let isIncreased: boolean;
             data = <ICrawlerIndex><unknown> await SysCrawlerIndex.findOne({
                 sysCrawlerIndexCategory: singleData.sysCrawlerIndexCategory
             }).populate('sysCrawlerIndexCategory').populate('sysCatalogType');
-            data.letterLock = await increaseLetter(data.letterLock);
-            // data.completed = true;
-            // await SysCrawlerIndex.replaceOne(data);
+            isIncreased = await increaseLetter(data.letterLock);
+            if(isIncreased) {
+                crawlerIndexHist.isCompleted=true;
+                crawlerIndexHist.sysCrawlerIndexCategory = data.sysCrawlerIndexCategory._id;
+                crawlerIndexHist.sysCrawlerIndex = data._id
+                await SysCrawlerIndexHist.create(crawlerIndexHist);
+            }
+            else {
+                throw new Error("crawler can't be completed")
+            }
         }
 
         async function increaseLetter(letterLock: string) {
             const letters = ['a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z'];
-            return letterLock;
+            return true;
         }
     }
 }

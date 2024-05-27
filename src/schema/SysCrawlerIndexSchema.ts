@@ -3,6 +3,7 @@ import {ICrawlerIndex} from "../interface/ICrawlerIndex";
 
 
 export const SysCrawlerIndexSchema: Schema<ICrawlerIndex> = new Schema({
+    _id :{type:mongoose.Schema.ObjectId,required:true},
     indexed: { type: Boolean, required: true },
     result: {type: Number,required:true},
     sysCrawlerIndexCategory: {
