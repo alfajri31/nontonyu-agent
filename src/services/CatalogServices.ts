@@ -6,7 +6,6 @@ import {SysCrawlerIndexCategory} from "../schema/SysCrawlerIndexCategorySchema";
 import {SysCatalogType} from "../schema/SysCatalogTypeSchema";
 import {Model} from "mongoose";
 import * as fs from "fs";
-import {ICrawlerIndexCategory} from "../interface/ICrawlerIndexCategory";
 import {ICrawlerIndex} from "../interface/ICrawlerIndex";
 
 export class CatalogServices {
@@ -92,14 +91,18 @@ export class CatalogServices {
             }());
 
         async function letterLockCompleted(singleData: ICrawlerIndex) {
-            const letters =
-                ['a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z'];
-            let data : ICrawlerIndexCategory
-            data = <ICrawlerIndexCategory><unknown> await SysCrawlerIndex.findOne({
+            let data : ICrawlerIndex
+            data = <ICrawlerIndex><unknown> await SysCrawlerIndex.findOne({
                 sysCrawlerIndexCategory: singleData.sysCrawlerIndexCategory
             }).populate('sysCrawlerIndexCategory').populate('sysCatalogType');
-            //increase letter and update sysCrawlerIndex letterLock
-            console.log(data);
+            data.letterLock = await increaseLetter(data.letterLock);
+            // data.completed = true;
+            // await SysCrawlerIndex.replaceOne(data);
+        }
+
+        async function increaseLetter(letterLock: string) {
+            const letters = ['a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z'];
+            return letterLock;
         }
     }
 }
