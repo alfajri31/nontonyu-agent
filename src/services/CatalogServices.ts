@@ -85,22 +85,22 @@ export class CatalogServices {
                  * logic complete crawler and increase the letterLock
                  */
                 const singleData = <ICrawlerIndex><unknown>fullProp[0]
-                await letterLockCompleted(singleData);
+                await completed(singleData);
             }())
             : (async function () {
                 throw "ERROR: An object on every property must have a value," +
                 "please adjust the selector and see the output object"
             }());
 
-        async function letterLockCompleted(singleData: ICrawlerIndex) {
+        async function completed(singleData: ICrawlerIndex) {
             let data : ICrawlerIndex
             const crawlerIndexHist = <ICrawlerIndexHist>{};
-            let isIncreased: boolean;
+            let hasIncreased: boolean;
             data = <ICrawlerIndex><unknown> await SysCrawlerIndex.findOne({
                 sysCrawlerIndexCategory: singleData.sysCrawlerIndexCategory
             }).populate('sysCrawlerIndexCategory').populate('sysCatalogType');
-            isIncreased = await increaseLetter(data.letterLock);
-            if(isIncreased) {
+            hasIncreased = await increaseLetter(data);
+            if(hasIncreased) {
                 crawlerIndexHist.isCompleted=true;
                 crawlerIndexHist.sysCrawlerIndexCategory = data.sysCrawlerIndexCategory._id;
                 crawlerIndexHist.sysCrawlerIndex = data._id
@@ -111,8 +111,27 @@ export class CatalogServices {
             }
         }
 
-        async function increaseLetter(letterLock: string) {
-            const letters = ['a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z'];
+        async function increaseLetter(data: ICrawlerIndex) {
+            const chars = data.letterLock.split('');
+            const lastChar = chars[chars.length-1];
+            const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+            if(lastChar!=='z') {
+                const index = letters.findIndex(letter => letter == chars[chars.length-1]);
+                chars[chars.length-1]
+                    .replace(chars[chars.length-1],letters[index+1]);
+            }
+            else {
+                const previousChar = chars[chars.length-2];
+                const index = letters.findIndex(letter => letter == chars[chars.length-1]);
+                chars[chars.length-2]
+                    .replace(chars[chars.length-2],letters[index+1]);
+            }
+            let newLetter = "";
+            for(let char in chars) {
+                newLetter += chars[char];
+            }
+            data.letterLock = newLetter;
+            await SysCrawlerIndex.replaceOne(data);
             return true;
         }
     }
