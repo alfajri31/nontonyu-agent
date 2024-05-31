@@ -112,21 +112,9 @@ export class CatalogServices {
         }
 
         async function increaseLetter(data: ICrawlerIndex) {
-            let i=0;
+            let inc=0;
             const chars = data.letterLock.split('');
-            const lastChar = chars[chars.length-1];
-            const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-            if(lastChar!=='z') {
-                const index = letters.findIndex(letter => letter == chars[chars.length-1]);
-                chars[chars.length-1]
-                    .replace(chars[chars.length-1],letters[index+1]);
-            }
-            else {
-                do {
-
-                }
-                while(await checkPreviousChar(chars, letters,i));
-            }
+            do {inc+=1} while(await checkCharIsZ(chars,inc));
             let newLetter = "";
             for(let char in chars) {
                 newLetter += chars[char];
@@ -136,13 +124,18 @@ export class CatalogServices {
             return true;
         }
 
-        async function checkPreviousChar(chars : string[],letters:string[],i:number) {
-            i+=1;
-            const previousChar = chars[chars.length-i];
-            const index = letters.findIndex(letter => letter == chars[chars.length-1]);
-            chars[chars.length-2]
-                .replace(chars[chars.length-2],letters[index+1]);
-            return false;
+        async function checkCharIsZ(chars : string[],inc:number) {
+            const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+            const previousChar = chars[chars.length-inc]; //aa
+            if(previousChar!=='z') { //..a!=z
+                const index = letters.findIndex(letter => letter == previousChar); //1
+                chars[chars.length-inc] //a..
+                    .replace(chars[chars.length-inc],letters[index+1]);
+                return false;
+            }
+            else {
+                return true;
+            }
         }
     }
 }
