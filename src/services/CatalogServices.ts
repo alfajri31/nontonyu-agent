@@ -112,6 +112,7 @@ export class CatalogServices {
         }
 
         async function increaseLetter(data: ICrawlerIndex) {
+            let i=0;
             const chars = data.letterLock.split('');
             const lastChar = chars[chars.length-1];
             const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
@@ -121,10 +122,10 @@ export class CatalogServices {
                     .replace(chars[chars.length-1],letters[index+1]);
             }
             else {
-                const previousChar = chars[chars.length-2];
-                const index = letters.findIndex(letter => letter == chars[chars.length-1]);
-                chars[chars.length-2]
-                    .replace(chars[chars.length-2],letters[index+1]);
+                do {
+
+                }
+                while(await checkPreviousChar(chars, letters,i));
             }
             let newLetter = "";
             for(let char in chars) {
@@ -133,6 +134,15 @@ export class CatalogServices {
             data.letterLock = newLetter;
             await SysCrawlerIndex.replaceOne(data);
             return true;
+        }
+
+        async function checkPreviousChar(chars : string[],letters:string[],i:number) {
+            i+=1;
+            const previousChar = chars[chars.length-i];
+            const index = letters.findIndex(letter => letter == chars[chars.length-1]);
+            chars[chars.length-2]
+                .replace(chars[chars.length-2],letters[index+1]);
+            return false;
         }
     }
 }
