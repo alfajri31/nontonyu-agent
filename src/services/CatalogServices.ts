@@ -114,7 +114,7 @@ export class CatalogServices {
         async function increaseLetter(data: ICrawlerIndex) {
             let inc=0;
             const chars = data.letterLock.split('');
-            do {inc+=1} while(await checkCharIsZ(chars,inc));
+            do {inc+=1} while(await checkCharIsNotZ(chars,inc));
             let newLetter = "";
             for(let char in chars) {
                 newLetter += chars[char];
@@ -124,17 +124,17 @@ export class CatalogServices {
             return true;
         }
 
-        async function checkCharIsZ(chars : string[],inc:number) {
+        async function checkCharIsNotZ(chars : string[],inc:number) {
             const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
             const previousChar = chars[chars.length-inc]; //aa
             if(previousChar!=='z') { //..a!=z
                 const index = letters.findIndex(letter => letter == previousChar); //1
                 chars[chars.length-inc] //a..
                     .replace(chars[chars.length-inc],letters[index+1]);
-                return false;
+                return true;
             }
             else {
-                return true;
+                return false;
             }
         }
     }
