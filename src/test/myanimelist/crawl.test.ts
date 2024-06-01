@@ -34,11 +34,11 @@ describe('search anime',  () => {
     it('Init Based Type', async () => {
         initBasedType.type = EnumCatalogTypes.ANIME;
         letterLock = await catalogService.searchService(initBasedType);
-    },60000);
+    },120000);
     it('Open gate MyAnimeList', async () => {
         page = await browser.newPage();
         await page.goto("https://myanimelist.net",{timeout:60000});
-    },60000);
+    },120000);
     it('How many anime that appear in list', async () => {
         await page.click('#topSearchText');
         await page.type('#topSearchText', letterLock);
@@ -49,7 +49,7 @@ describe('search anime',  () => {
         let dtoCatalogAnimeList : DTOCatalogAnime[]=[];
         let href="https://myanimelist.net/anime/50/Aa_Megami-sama_TV?q=aa%20&cat=anime";
         // for (const href of hrefs) {
-            await page.goto(href,{timeout:60000});
+            await page.goto(href,{timeout:120000});
             const dtoCatalogAnime = new DTOCatalogAnime();
             dtoCatalogAnime.title = await getInnerText(selectorCatalogAnime.title);
             dtoCatalogAnime.type = await getInnerText(selectorCatalogAnime.type);
@@ -79,7 +79,7 @@ describe('search anime',  () => {
             dtoCatalogAnimeList.push(dtoCatalogAnime);
         // }
         await catalogService.createCrawl(dtoCatalogAnimeList,CatalogAnimeTv)
-    },60000);
+    },120000);
 });
 
 
