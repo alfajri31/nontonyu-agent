@@ -21,8 +21,7 @@ export const SysCrawlerIndexSchema: Schema<ICrawlerIndex> = new Schema({
         required: true
     }
 },{
-    collection:"sys_crawler_index",
-    versionKey: false
+    collection:"sys_crawler_index"
 });
 
 export const SysCrawlerIndex = mongoose.model('SysCrawlerIndex', SysCrawlerIndexSchema);

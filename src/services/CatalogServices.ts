@@ -120,7 +120,7 @@ export class CatalogServices {
                 newLetter += chars[char];
             }
             data.letterLock = newLetter;
-            await SysCrawlerIndex.replaceOne({},data);
+            await SysCrawlerIndex.replaceOne({},data).select('__v');
             return true;
         }
 
