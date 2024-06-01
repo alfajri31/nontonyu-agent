@@ -16,7 +16,7 @@ export async function getHref(selector:string):Promise<string[]> {
     }
     return hrefs;
 }
-export async function getInnerText(selector:string,contain?:string|undefined) :Promise<string>{
+export async function getInnerText(selector:string,containText?:string|undefined) :Promise<string>{
     let text : string;
     let textArray :string[]=[];
     const selectors = selector.split(",")
@@ -28,15 +28,15 @@ export async function getInnerText(selector:string,contain?:string|undefined) :P
             textArray.push(text);
         }catch (e){}
     }
-    if(contain) {
-        const regexExp = new RegExp(contain,'i');
+    if(containText) {
+        const regexExp = new RegExp(containText,'i');
         textArray = textArray.filter((data => data.match(regexExp)));
     }
     // @ts-ignore
     return textArray.toString()
 }
 
-export async function getSrc(selector:string,contain?:string|undefined) :Promise<string>{
+export async function getSrc(selector:string,containText?:string|undefined) :Promise<string>{
     let text : string;
     let textArray :string[]=[];
     const selectors = selector.split(",")
@@ -48,8 +48,8 @@ export async function getSrc(selector:string,contain?:string|undefined) :Promise
             textArray.push(text);
         }catch (e){}
     }
-    if(contain) {
-        const regexExp = new RegExp(contain,'i');
+    if(containText) {
+        const regexExp = new RegExp(containText,'i');
         textArray = textArray.filter((data => data.match(regexExp)));
     }
     // @ts-ignore
