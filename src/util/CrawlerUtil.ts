@@ -62,7 +62,7 @@ export async function replaceEmptyStringObject(objects : Object[]) {
             // @ts-ignore
             if(object[key]=="") {
                 // @ts-ignore
-                object[key]="n/a"
+                object[key]="not_detected!"
             }
         }
     }

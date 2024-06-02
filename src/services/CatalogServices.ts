@@ -38,7 +38,7 @@ export class CatalogServices {
         if(searchCap) {
             let rangeCap = searchCap.get("rangeCap");
             let currentLetterLength = String(searchCap.get("letterLock")).length;
-            if(searchCap.get("letterLock")=="" || currentLetterLength != rangeCap) {
+            if((searchCap.get("letterLock")=="" || currentLetterLength != rangeCap) && searchCap.get('resetLetterLock')==true) {
                 let currentLock : string;
                 currentLock = String(searchCap.get("letterLock")).replace(/[^\d,.]+/g,"a")
                 for(let i=0;i < Number(searchCap.get("rangeCap"))-1;i++) {
@@ -102,6 +102,7 @@ export class CatalogServices {
                 crawlerIndexHist.isCompleted=true;
                 crawlerIndexHist.sysCrawlerIndexCategory = data.sysCrawlerIndexCategory._id;
                 crawlerIndexHist.sysCrawlerIndex = data._id
+                await SysCrawlerIndex.replaceOne({},data).select('__v');
                 await SysCrawlerIndexHist.create(crawlerIndexHist);
             }
             else {

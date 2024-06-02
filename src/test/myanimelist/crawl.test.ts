@@ -80,7 +80,7 @@ describe('search anime',  () => {
             // break;
         }
         await catalogService.createCrawl(dtoCatalogAnimeList,CatalogAnimeTv)
-    },120000);
+    },1800000); //30 minutes
 });
 
 

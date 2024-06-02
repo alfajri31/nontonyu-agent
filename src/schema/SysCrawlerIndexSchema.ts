@@ -20,7 +20,7 @@ export const SysCrawlerIndexSchema: Schema<ICrawlerIndex> = new Schema({
         ref:"SysCatalogType",
         required: true
     },
-    resetConfig: {type:Boolean,default:false}
+    resetLetterLock: {type:Boolean,default:true,alias: 'reset_letter_lock'}
 },{
     collection:"sys_crawler_index_config"
 });
