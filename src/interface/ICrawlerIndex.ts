@@ -12,4 +12,5 @@ export interface ICrawlerIndex {
     createdAt: Date;
     updatedAt: Date;
     rangeCap: number;
+    resetConfig: boolean;
 }

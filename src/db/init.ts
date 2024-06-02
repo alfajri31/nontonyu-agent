@@ -18,10 +18,12 @@ export default (async()=> {
         await SysCrawlerIndex.createCollection().then(async (r) => {
             let data = await SysCrawlerIndex.findOne();
             if (!data) {
-                SysCrawlerIndexSeed.forEach(seed => {
-                    // @ts-ignore
-                    seed.sysCatalogType = result['insertedIds'][0];
-                });
+                const catalogType = await SysCatalogType.findOne();
+                const category = await SysCrawlerIndexCategory.findOne();
+                // @ts-ignore
+                SysCrawlerIndexSeed['sysCatalogType'] = catalogType.get("_id");
+                // @ts-ignore
+                SysCrawlerIndexSeed['sysCrawlerIndexCategory'] = category.get("_id");
                 await SysCrawlerIndex.insertMany(SysCrawlerIndexSeed);
             }
         });

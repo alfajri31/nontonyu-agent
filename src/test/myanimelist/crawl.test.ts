@@ -77,7 +77,7 @@ describe('search anime',  () => {
             sysCrawlerIndexCategory? dtoCatalogAnime.sysCrawlerIndexCategory=sysCrawlerIndexCategory.get("_id") :"";
             dtoCatalogAnime.letterLock = letterLock;
             dtoCatalogAnimeList.push(dtoCatalogAnime);
-            break;
+            // break;
         }
         await catalogService.createCrawl(dtoCatalogAnimeList,CatalogAnimeTv)
     },120000);

@@ -19,9 +19,10 @@ export const SysCrawlerIndexSchema: Schema<ICrawlerIndex> = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:"SysCatalogType",
         required: true
-    }
+    },
+    resetConfig: {type:Boolean,default:false}
 },{
-    collection:"sys_crawler_index"
+    collection:"sys_crawler_index_config"
 });
 
 export const SysCrawlerIndex = mongoose.model('SysCrawlerIndex', SysCrawlerIndexSchema);
