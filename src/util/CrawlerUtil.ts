@@ -68,3 +68,14 @@ export async function replaceEmptyStringObject(objects : Object[]) {
     }
 }
 
+export async function validateObjectCannotBeEmpty(objects: Object[]) {
+    return objects.filter(object => {
+        const tmp: string[] = [];
+        for (const key in object) {
+            // @ts-ignore
+            tmp.push(object[key])
+        }
+        return tmp.every(el => el !== '' || null || undefined);
+    });
+}
+

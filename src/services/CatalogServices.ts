@@ -9,7 +9,7 @@ import * as fs from "fs";
 import {ICrawlerIndex} from "../interface/ICrawlerIndex";
 import {SysCrawlerIndexHist} from "../schema/SysCrawlerIndexHistorySchema";
 import {ICrawlerIndexHist} from "../interface/ICrawlerIndexHist";
-import {replaceEmptyStringObject} from "../util/CrawlerUtil";
+import {replaceEmptyStringObject, validateObjectCannotBeEmpty} from "../util/CrawlerUtil";
 
 export class CatalogServices {
     async searchService(initBasedType : DTOInitBasedType) : Promise<string> {
@@ -59,14 +59,7 @@ export class CatalogServices {
 
     async createCrawl(objects: Object[],model:Model<any>): Promise<any> {
         await replaceEmptyStringObject(objects);
-        const fullProp = objects.filter(object => {
-            const tmp :string[]=[];
-            for (const key in object) {
-                // @ts-ignore
-                tmp.push(object[key])
-            }
-            return tmp.every(el => el!==''||null||undefined);
-        });
+        const fullProp = await validateObjectCannotBeEmpty(objects);
         let jsonString = JSON.stringify(objects);
         let jsonPretty = JSON.stringify(JSON.parse(jsonString),null,2);
         fs.writeFile('src/logs/'+model.modelName+'.json', jsonPretty,  function(err) {
