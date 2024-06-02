@@ -9,6 +9,7 @@ import * as fs from "fs";
 import {ICrawlerIndex} from "../interface/ICrawlerIndex";
 import {SysCrawlerIndexHist} from "../schema/SysCrawlerIndexHistorySchema";
 import {ICrawlerIndexHist} from "../interface/ICrawlerIndexHist";
+import {replaceEmptyStringObject} from "../util/CrawlerUtil";
 
 export class CatalogServices {
     async searchService(initBasedType : DTOInitBasedType) : Promise<string> {
@@ -23,7 +24,9 @@ export class CatalogServices {
                 crawlerIndex.letterLock = String(await this.searchLockService());
                 crawlerIndex.result = 0;
                 crawlerIndex.sysCatalogType = Object(currentType.get("_id"));
-                await SysCrawlerIndex.replaceOne({}, crawlerIndex);
+                await SysCrawlerIndex.updateOne({
+                    sysCatalogType : Object(currentType.get("_id"))
+                }, crawlerIndex);
             }
             return crawlerIndex.letterLock;
         }
@@ -55,6 +58,7 @@ export class CatalogServices {
     }
 
     async createCrawl(objects: Object[],model:Model<any>): Promise<any> {
+        await replaceEmptyStringObject(objects);
         const fullProp = objects.filter(object => {
             const tmp :string[]=[];
             for (const key in object) {
@@ -88,9 +92,10 @@ export class CatalogServices {
                 await completed(singleData);
             }())
             : (async function () {
-                throw "ERROR: An object on every property must have a value," +
-                "please adjust the selector and see the output object"
+                throw "Objects are empty"
             }());
+
+
 
         async function completed(singleData: ICrawlerIndex) {
             let data : ICrawlerIndex
@@ -114,7 +119,7 @@ export class CatalogServices {
         async function increaseLetter(data: ICrawlerIndex) {
             let inc=0;
             const chars = data.letterLock.split('');
-            do {inc+=1} while(await charIsZ(chars,inc));
+            do {inc+=1} while(await charIsZ(chars,inc)&&data.rangeCap-1<=inc);
             let newLetter = "";
             for(let char in chars) {
                 newLetter += chars[char];

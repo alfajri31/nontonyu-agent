@@ -56,3 +56,15 @@ export async function getSrc(selector:string,containText?:string|undefined) :Pro
     return textArray.toString()
 }
 
+export async function replaceEmptyStringObject(objects : Object[]) {
+    for (const object of objects) {
+        for(let key in object) {
+            // @ts-ignore
+            if(object[key]=="") {
+                // @ts-ignore
+                object[key]="n/a"
+            }
+        }
+    }
+}
+
