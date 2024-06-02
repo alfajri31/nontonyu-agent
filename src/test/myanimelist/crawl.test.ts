@@ -5,11 +5,11 @@ import {EnumCatalogTypes} from "../../enum/EnumCatalogTypes";
 import {DTOInitBasedType} from "../../model/global/catalog/DTOInitBasedType";
 import {getHref, getInnerText, getSrc} from "../../util/CrawlerUtil";
 import {SelectorCatalogAnime} from "../../selector/SelectorCatalogAnime";
-import {CatalogAnimeTv} from "../../schema/CatalogAnimeSchema";
 import {EnumCategoryCrawl} from "../../enum/EnumCategoryCrawl";
 import {SysCatalogType} from "../../schema/SysCatalogTypeSchema";
 import {SysCrawlerIndexCategory} from "../../schema/SysCrawlerIndexCategorySchema";
 import {DTOCatalogAnime} from "../../model/myanimelist/catalog/DTOCatalogAnime";
+import mongoose from "mongoose";
 
 let browser: any;
 export let page: any;
@@ -62,7 +62,7 @@ describe('search anime',  () => {
             dtoCatalogAnime.licensors= await getInnerText(selectorCatalogAnime.licensors);
             dtoCatalogAnime.premired = await getInnerText(selectorCatalogAnime.premired);
             dtoCatalogAnime.producers = await getInnerText(selectorCatalogAnime.producers);
-            dtoCatalogAnime.synopsis = await getInnerText(selectorCatalogAnime.synopsis);
+            // dtoCatalogAnime.synopsis = await getInnerText(selectorCatalogAnime.synopsis);
             dtoCatalogAnime.themes = await getInnerText(selectorCatalogAnime.themes);
             dtoCatalogAnime.score = await getInnerText(selectorCatalogAnime.score);
             dtoCatalogAnime.urlCatalogImage = await getSrc(selectorCatalogAnime.urlCatalogImage);
@@ -77,9 +77,41 @@ describe('search anime',  () => {
             sysCrawlerIndexCategory? dtoCatalogAnime.sysCrawlerIndexCategory=sysCrawlerIndexCategory.get("_id") :"";
             dtoCatalogAnime.letterLock = letterLock;
             dtoCatalogAnimeList.push(dtoCatalogAnime);
-            // break;
+            break;
         }
-        await catalogService.createCrawl(dtoCatalogAnimeList,CatalogAnimeTv)
+        const eventSchema = new mongoose.Schema({
+            synopsis: {type: String,required:true},
+            title: { type: String, required: true },
+            aired: {type:String,required:true},
+            broadcast : { type: String, required: true },
+            duration:{ type: String, required: true },
+            episodes: { type: String, required: true },
+            genres: { type: String, required: true },
+            licensors:{ type: String, required: true },
+            premired:{ type: String, required: true },
+            producers: { type: String, required: true },
+            studios: { type: String, required: true },
+            themes: { type: String, required: true },
+            type: { type: String, required: true },
+            score : { type: String, required: true },
+            createdAt: { type: Date, default: Date.now },
+            updatedAt: { type: Date, default: Date.now },
+            letterLock: { type: String, required: true },
+            urlCatalog:{type:String,required:true},
+            urlCatalogImage:{type:String,required:true},
+            sysCatalogType : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "SysCatalogType",
+                required: true
+            },
+            sysCrawlerIndexCategory: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref : "SysCatalogType",
+                required: true
+            }
+        },{collection:"catalog_anime"});
+        const Event = mongoose.model('Event', eventSchema);
+        await catalogService.createCrawl(dtoCatalogAnimeList,Event);
     },1800000); //30 minutes
 });
 

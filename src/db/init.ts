@@ -8,7 +8,7 @@ import {SysCrawlerIndexHist} from "../schema/SysCrawlerIndexHistorySchema";
 
 export default (async()=> {
     await mongoose.connect("mongodb://127.0.0.1/nontonyu");
-    await CatalogAnimeTv.createCollection();
+    // await CatalogAnimeTv.createCollection();
     await SysCatalogType.createCollection().then(async (r) => {
         const data = await r.findOne();
         if (!data) {

@@ -57,7 +57,7 @@ export class CatalogServices {
         }
     }
 
-    async createCrawl(objects: Object[],model:Model<any>): Promise<any> {
+    async createCrawl(objects: Object[],model : Model<any>): Promise<any> {
         await replaceEmptyStringObject(objects);
         const fullProp = await validateObjectCannotBeEmpty(objects);
         let jsonString = JSON.stringify(objects);
